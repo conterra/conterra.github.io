@@ -1,10 +1,15 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { ChakraProvider } from '@chakra-ui/react'
+
+import SIMPLE from './components/navbar'
 
 function App() {
   return (
+  <ChakraProvider>
     <div className="App">
+      <SIMPLE />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -20,6 +25,7 @@ function App() {
         </a>
       </header>
     </div>
+    </ChakraProvider>
   );
 }
 
