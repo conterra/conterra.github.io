@@ -2,34 +2,64 @@ import './App.css';
 import { ChakraProvider } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import JsonData from './data/data.json'
+import { Octokit } from "@octokit/core";
 
-import Navbar from './components/navbar'
+
+import { BrowserRouter, Routes, Route } from "react-router";
+import { Navbar } from './components/navbar'
+import { Nopage } from './components/nopage'
 import { About } from './components/about'
 import { Contact } from './components/contact';
 import { Features } from './components/features';
 
 function App() {
     interface LandingPageData {
-        Services: any; // Replace 'any' with the actual type of the 'Services' property
-        // Add other properties if necessary
+        Services: any;
+        Features: any
     }
 
-    const [landingPageData, setLandingPageData] = useState<LandingPageData | null>(null)
-    useEffect(() => {
-        setLandingPageData(JsonData)
-    }, [])
+    const octokit = new Octokit({
+        auth: process.env.REACT_APP_GITHUB_TOKEN
+    });
 
+    const [landingPageData, setLandingPageData] = useState<LandingPageData | null>(null);
+    const [gitHubRepoData, setGitHubRepoData] = useState<any>(null);
+
+    useEffect(() => {
+        setLandingPageData(JsonData);
+    }, []);
+
+    useEffect(() => {
+        const fetchGitHubRepoData = async () => {
+            try {
+                const latestUpdatedRepos = await octokit.request('GET /orgs/{org}/repos', {
+                    org: 'conterra',
+                    type: 'public',
+                    sort: 'updated',
+                    headers: {
+                        'X-GitHub-Api-Version': '2022-11-28'
+                    }
+                });
+                setGitHubRepoData(latestUpdatedRepos.data);
+            } catch (error) {
+                console.error('Error fetching API data:', error);
+            }
+        };
+
+        fetchGitHubRepoData();
+    }, []);
 
     return (
         <ChakraProvider>
-            <div className="App">
+            <BrowserRouter>
                 <Navbar />
-                <div className="main_content" style={{ paddingTop: 80 }}>
-                    <About data={landingPageData?.Services} />
-                    <Contact data={landingPageData?.Services} />
-                    <Features data={landingPageData?.Services} />
-                </div>
-            </div>
+                <Routes>
+                    <Route index element={<About />} />
+                    <Route path="features" element={<Features data={gitHubRepoData} />} />
+                    <Route path="contact" element={<Contact />} />
+                    <Route path="*" element={<Nopage />} />
+                </Routes>
+            </BrowserRouter>
         </ChakraProvider>
     );
 }
