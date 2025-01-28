@@ -3,26 +3,21 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import JsonData from './data/data.json'
 import { Octokit } from "@octokit/core";
-
-
 import { BrowserRouter, Routes, Route } from "react-router";
-import { Navbar } from './components/navbar'
-import { Nopage } from './components/nopage'
-import { About } from './components/about'
-import { Contact } from './components/contact';
-import { Features } from './components/features';
+
+import { NavBar } from './components/NavBar'
+import { PageNotFound } from './components/PageNotFound'
+import { NewsPage } from './components/NewsPage'
+import { AboutPage } from './components/AboutPage'
+import { ContactPage } from './components/ContactPage';
+import { CompleteBundleOverview } from './components/CompleteBundleOverview';
 
 function App() {
-    interface LandingPageData {
-        Services: any;
-        Features: any
-    }
-
     const octokit = new Octokit({
         auth: process.env.REACT_APP_GITHUB_TOKEN
     });
 
-    const [landingPageData, setLandingPageData] = useState<LandingPageData | null>(null);
+    const [landingPageData, setLandingPageData] = useState<any | null>(null);
     const [gitHubRepoData, setGitHubRepoData] = useState<any>(null);
 
     useEffect(() => {
@@ -36,6 +31,7 @@ function App() {
                     org: 'conterra',
                     type: 'public',
                     sort: 'updated',
+                    per_page: 100,
                     headers: {
                         'X-GitHub-Api-Version': '2022-11-28'
                     }
@@ -52,12 +48,13 @@ function App() {
     return (
         <ChakraProvider>
             <BrowserRouter>
-                <Navbar />
+                <NavBar />
                 <Routes>
-                    <Route index element={<About />} />
-                    <Route path="features" element={<Features data={gitHubRepoData} />} />
-                    <Route path="contact" element={<Contact />} />
-                    <Route path="*" element={<Nopage />} />
+                    <Route index path="about" element={<AboutPage />} />
+                    <Route path="news" element={<NewsPage />} />
+                    <Route path="overview" element={<CompleteBundleOverview data={gitHubRepoData} />} />
+                    <Route path="contact" element={<ContactPage />} />
+                    <Route path="*" element={<PageNotFound />} />
                 </Routes>
             </BrowserRouter>
         </ChakraProvider>

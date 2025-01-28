@@ -1,5 +1,3 @@
-'use client'
-import React from 'react';
 import {
   Box,
   Flex,
@@ -7,7 +5,6 @@ import {
   Image,
   useColorModeValue,
 } from '@chakra-ui/react'
-import { Outlet, Link } from "react-router";
 
 interface Link {
   text: string;
@@ -15,11 +12,11 @@ interface Link {
 }
 
 interface Props {
-  children: Link;
+  children: string;
   href: string;
 }
 
-const Links = [{ text: 'Über Uns', link: "/about" }, { text: 'Funktionen', link: "/features" }, { text: 'Kontakt', link: "/contact" }]
+const Links = [{ text: 'Über Uns', link: "/about" }, { text: 'News', link: "/news" }, { text: 'Übersicht', link: "/overview" }, { text: 'Kontakt', link: "/contact" }]
 
 const NavLink = (props: Props) => {
   const { children } = props
@@ -34,13 +31,13 @@ const NavLink = (props: Props) => {
         textDecoration: 'none',
         bg: useColorModeValue('gray.200', 'gray.700'),
       }}
-      href={children?.link}>
-      {children.link}
+      href={props.href}>
+      {children}
     </Box>
   )
 }
 
-export const Navbar = () => {
+export const NavBar = () => {
   return (
     <>
       <Flex>
@@ -54,8 +51,7 @@ export const Navbar = () => {
             <Box>
               <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
                 {Links.map((link) => (
-                  // <NavLink key={link.text} href={link.link}>{link}</NavLink>
-                  <Link key={link.link} to={link.link}>{link.text}</Link>
+                  <NavLink key={link.text} href={link.link}>{link.text}</NavLink>
                 ))}
               </HStack>
             </Box>
