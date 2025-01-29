@@ -1,15 +1,47 @@
+import { useEffect, useState } from 'react';
 import {
   Box, Button, Card, CardBody, CardFooter, CardHeader,
   Heading, Image, SimpleGrid, Stack, StackDivider, Text
 } from '@chakra-ui/react'
+import { Octokit } from "@octokit/core";
 
-export const CompleteBundleOverview = (props: any) => {
+export const CompleteBundleOverview = () => {
+    const [gitHubRepoData, setGitHubRepoData] = useState<any>(null);
+
+    useEffect(() => {
+        const fetchGitHubRepoData = async () => {
+            try {
+                const octokit = new Octokit({
+                    auth: process.env.REACT_APP_GITHUB_TOKEN
+                });
+
+                const gitHubRepoData = await octokit.request('GET /orgs/{org}/repos', {
+                    org: 'conterra',
+                    type: 'public',
+                    sort: 'updated',
+                    per_page: 100,
+                    headers: {
+                        'X-GitHub-Api-Version': '2022-11-28'
+                    }
+                });
+
+                const currentMapappsRepoData = gitHubRepoData.data.filter((repo: any) => repo.topics.includes('4x') && repo.topics.includes('mapapps') && !repo.archived);
+
+                setGitHubRepoData(currentMapappsRepoData);
+            } catch (error) {
+                console.error('Error fetching API data:', error);
+            }
+        };
+
+        fetchGitHubRepoData();
+    }, []);
+
   return (
     <>
       <div className="page-content__container">
         <div className="repo-overview__container">
           <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(300px, 1fr))'>
-            {props.data ? props.data.map((d: any, i: any) => (
+            {gitHubRepoData ? gitHubRepoData.map((d: any, i: any) => (
               <div key={`${d.name}-${i}`} className='col-md-4'>
                 <Card >
 
