@@ -37,7 +37,7 @@ const NavLink = (props: Props) => {
   )
 }
 
-export const NavBar = () => {
+export const NavigationBar = () => {
   return (
     <>
       <Flex>
