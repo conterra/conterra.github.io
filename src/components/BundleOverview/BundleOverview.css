@@ -2,9 +2,13 @@
     padding: 10px;
 }
 
+#root .repo-overview__container .chakra-input {
+    margin-bottom: 10px;
+}
+
 #root .repo-overview__container .chakra-card {
     height: 100%
-  }
+}
 
 #root .repo-overview__container .chakra-card:hover {
     transform: scale(1.05);

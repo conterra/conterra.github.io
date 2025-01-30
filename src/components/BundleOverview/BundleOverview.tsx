@@ -1,35 +1,62 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
     Box, Button, Card, CardBody, CardFooter, CardHeader, Center,
-    Heading, Image, SimpleGrid, Spinner, Stack, StackDivider, Text
+    Heading, Image, Input, InputGroup, InputLeftElement, SimpleGrid, Spinner, Stack, StackDivider, Text
 } from '@chakra-ui/react'
 import { Octokit } from "@octokit/core";
 
 import "./BundleOverview.css";
 import { BundleOverviewController } from './BundleOverviewController';
 
-import { MdOutlineExitToApp } from "react-icons/md";
+import { MdSearch , MdOutlineExitToApp } from "react-icons/md";
 
 export const BundleOverview = () => {
     const [gitHubRepoData, setGitHubRepoData] = useState<any>(null);
-    
+
     const octokit = useMemo(() => new Octokit({
         auth: process.env.REACT_APP_GITHUB_TOKEN
     }), []);
-
     const controller = useMemo(() => new BundleOverviewController(), []);
 
     useEffect(() => {
         controller.fetchGitHubRepoData(octokit).then((data) => {
             setGitHubRepoData(data);
+            setFilteredRepos(data);
         });
     }, [controller, octokit]);
+
+    const [searchItem, setSearchItem] = useState('');
+    const [filteredRepos, setFilteredRepos] = useState(gitHubRepoData);
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const searchTerm = e.target.value;
+        setSearchItem(searchTerm);
+
+        if (!searchTerm) {
+            setFilteredRepos(gitHubRepoData);
+            return;
+        }
+
+        const filteredItems = gitHubRepoData.filter((repo: any) =>
+            repo?.name?.toLowerCase().includes(searchTerm?.toLowerCase()) || 
+            repo?.description?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
+            repo?.topics?.some((topic: string) => topic.toLowerCase().includes(searchTerm?.toLowerCase()))
+        );
+
+        setFilteredRepos(filteredItems);
+    };
 
     return (
         <>
             <div className="page-content__container repo-overview__container">
+                <InputGroup flex="1" >
+                    <InputLeftElement pointerEvents='none'>
+                        <MdSearch />
+                    </InputLeftElement>
+                    <Input type="text" value={searchItem} onChange={handleInputChange} placeholder="Developer Network Bundles durchsuchen" />
+                </InputGroup>
                 <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(300px, 1fr))'>
-                    {gitHubRepoData ? gitHubRepoData.map((d: any, i: any) => (
+                    {filteredRepos ? filteredRepos.map((d: any, i: any) => (
                         <div key={`${d.name}-${i}`} className='col-md-4'>
                             <Card >
 
