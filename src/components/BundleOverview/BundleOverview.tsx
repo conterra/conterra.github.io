@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
     Box, Button, Card, CardBody, CardFooter, CardHeader, Center,
     Heading, Image, SimpleGrid, Spinner, Stack, StackDivider, Text
@@ -6,34 +6,24 @@ import {
 import { Octokit } from "@octokit/core";
 
 import "./BundleOverview.css";
+import { BundleOverviewController } from './BundleOverviewController';
+
+import { MdOutlineExitToApp } from "react-icons/md";
 
 export const BundleOverview = () => {
     const [gitHubRepoData, setGitHubRepoData] = useState<any>(null);
+    
+    const octokit = useMemo(() => new Octokit({
+        auth: process.env.REACT_APP_GITHUB_TOKEN
+    }), []);
+
+    const controller = useMemo(() => new BundleOverviewController(), []);
 
     useEffect(() => {
-        const fetchGitHubRepoData = async () => {
-            try {
-                const octokit = new Octokit({
-                    auth: process.env.REACT_APP_GITHUB_TOKEN
-                });
-
-                const gitHubRepoData = await octokit.request('GET /orgs/{org}/repos', {
-                    org: 'conterra',
-                    type: 'public',
-                    sort: 'updated',
-                    per_page: 100
-                });
-
-                setGitHubRepoData(gitHubRepoData.data.filter((repo: any) =>
-                    repo.topics.includes('4x') && repo.topics.includes('mapapps') && !repo.archived
-                ));
-            } catch (error) {
-                console.error('Error fetching API data:', error);
-            }
-        };
-
-        fetchGitHubRepoData();
-    }, []);
+        controller.fetchGitHubRepoData(octokit).then((data) => {
+            setGitHubRepoData(data);
+        });
+    }, [controller, octokit]);
 
     return (
         <>
@@ -44,13 +34,15 @@ export const BundleOverview = () => {
                             <Card >
 
                                 <CardHeader>
-                                    <Heading size='sm'>{d.name}</Heading>
+                                    <Heading textTransform='capitalize' size='sm'>
+                                        {controller.formatRepositoryName(d.name)}
+                                    </Heading>
                                 </CardHeader>
 
                                 <CardBody>
                                     <Stack divider={<StackDivider />} spacing='4'>
                                         <Box>
-                                            <Heading size='xs' textTransform='uppercase'>
+                                            <Heading size='xs'>
                                                 Beschreibung
                                             </Heading>
                                             <Text pt='2' fontSize='sm'>
@@ -58,29 +50,30 @@ export const BundleOverview = () => {
                                             </Text>
                                         </Box>
                                         <Box>
-                                            <Heading size='xs' textTransform='uppercase'>
-                                                Letztes Update
-                                            </Heading>
-                                            <Text pt='2' fontSize='sm'>
-                                                {d.updated_at}
-                                            </Text>
-                                        </Box>
-                                        <Box>
-                                            <Heading size='xs' textTransform='uppercase'>
+                                            <Heading size='xs'>
                                                 Zustand
                                             </Heading>
                                             <Text pt='2' fontSize='sm'>
+                                                <Text pt='2' fontSize='sm'>
+                                                    <Image src={`https://github.com/conterra/${d.name}/actions/workflows/devnet-bundle-snapshot.yml/badge.svg`} />
+                                                    Letztes Update: Vor {controller.getTimeDifferenceFromPush(d.updated_at)} Tagen
+                                                </Text>
                                                 {d.open_issues_count} offene Issues
-                                                <Image src={`https://github.com/conterra/${d.name}/actions/workflows/devnet-bundle-snapshot.yml/badge.svg`} />
+
                                             </Text>
                                         </Box>
                                     </Stack>
                                 </CardBody>
 
                                 <CardFooter>
-                                    <Button variant='solid' colorScheme='blue' onClick={() => window.open(`${d.svn_url}`, '_blank')}>
-                                        Detailseite öffnen
+                                    <Button leftIcon={<MdOutlineExitToApp />} variant='solid' onClick={() => window.open(`${d.svn_url}`, '_blank')}>
+                                        Zur Detailseite
                                     </Button>
+                                    {d.homepage && (
+                                        <Button leftIcon={<MdOutlineExitToApp />} variant='solid' colorScheme='blue' onClick={() => window.open(`${d.homepage}`, '_blank')}>
+                                            Zur Demo
+                                        </Button>
+                                    )}
                                 </CardFooter>
 
                             </Card>
