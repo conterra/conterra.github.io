@@ -6,10 +6,10 @@ import { BrowserRouter, Routes, Route } from "react-router";
 
 import { NavigationBar } from './components/NavigationBar'
 import { PageNotFound } from './components/PageNotFound'
-import { NewsPage } from './components/NewsPage'
+import { NewsPage } from './components/NewsPage/NewsPage'
 import { AboutPage } from './components/AboutPage'
 import { ContactPage } from './components/ContactPage';
-import { CompleteBundleOverview } from './components/CompleteBundleOverview';
+import { BundleOverview } from './components/BundleOverview/BundleOverview';
 
 function App() {
     const [landingPageData, setLandingPageData] = useState<any | null>(null);
@@ -25,7 +25,7 @@ function App() {
                 <Routes>
                     <Route index path="about" element={<AboutPage />} />
                     <Route path="news" element={<NewsPage />} />
-                    <Route path="overview" element={<CompleteBundleOverview />} />
+                    <Route path="overview" element={<BundleOverview />} />
                     <Route path="contact" element={<ContactPage />} />
                     <Route path="*" element={<PageNotFound />} />
                 </Routes>

@@ -1,0 +1,12 @@
+#root .repo-overview__container {
+    padding: 10px;
+}
+
+#root .repo-overview__container .chakra-card {
+    height: 100%
+  }
+
+#root .repo-overview__container .chakra-card:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease-in-out;
+}

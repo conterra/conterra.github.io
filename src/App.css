@@ -1,22 +1,10 @@
-#root {
-  background-color: darkgray;
-}
-
 #root .page-content__container{
   margin-top: 67px;
 }
 
-#root .repo-overview__container {
-  padding: 10px;
-}
-
-#root .chakra-card {
-  height: 100%
-}
-
-#root .chakra-card:hover {
-  transform: scale(1.05);
-  transition: transform 0.2s ease-in-out;
+#root .chakra-spinner {
+    margin-top: 10%;
+    border-color: #005587
 }
 
 #root .chakra-card .chakra-card__header {

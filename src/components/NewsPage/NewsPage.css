@@ -1,0 +1,7 @@
+#root .newspage__container {
+    padding: 10px;
+}
+
+#root .newspage__container .chakra-card {
+    margin-bottom: 15px;
+}
