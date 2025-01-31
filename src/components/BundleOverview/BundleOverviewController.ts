@@ -1,3 +1,4 @@
+import config from './config.json';
 
 export class BundleOverviewController {
 
@@ -5,8 +6,8 @@ export class BundleOverviewController {
         try {
             const gitHubRepoData = await octokit.request('GET /orgs/{org}/repos', {
                 org: 'conterra',
-                type: 'public',
-                sort: 'updated',
+                type: 'name',
+                sort: 'full_name',
                 per_page: 100
             });
 
@@ -32,4 +33,27 @@ export class BundleOverviewController {
 
         return Math.round(timeDifference / (1000 * 3600 * 24));
     }
+
+    public sortRepositoriesByTopics(repoData: any[]) {
+        const topics = config.gitHubRepoTopicList.topics;
+        const sortedRepos: any = [];
+
+        topics.forEach((topic) => {
+            sortedRepos.push({
+                topic: topic,
+                repos: repoData.filter((repo: any) => repo.topics.includes(topic))
+            });
+        });
+
+        const unmatchedRepos = repoData.filter((repo: any) =>
+            !topics.some((topic) => repo.topics.includes(topic))
+        );
+
+        sortedRepos.push({
+            topic: "other",
+            repos: unmatchedRepos
+        });
+
+        return sortedRepos;
+    };
 }
