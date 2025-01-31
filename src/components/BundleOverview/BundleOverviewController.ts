@@ -40,8 +40,8 @@ export class BundleOverviewController {
 
         topics.forEach((topic) => {
             sortedRepos.push({
-                topic: topic,
-                repos: repoData.filter((repo: any) => repo.topics.includes(topic))
+                topic: topic.displayValue,
+                repos: repoData.filter((repo: any) => repo.topics.includes(topic.topic))
             });
         });
 
@@ -50,7 +50,7 @@ export class BundleOverviewController {
         );
 
         sortedRepos.push({
-            topic: "other",
+            topic: "Weitere Funktionen",
             repos: unmatchedRepos
         });
 

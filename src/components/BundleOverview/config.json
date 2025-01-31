@@ -1,8 +1,18 @@
 {
     "gitHubRepoTopicList": {
         "topics": [
-            "3D",
-            "search"
+            {
+                "topic": "search",
+                "displayValue": "Suchen und Filtern"
+            },
+            {
+                "topic": "analysis",
+                "displayValue": "Analyse-Tools"
+            },
+            {
+                "topic": "3d",
+                "displayValue": "3D Funktionen"
+            }
         ]
     }
 }
