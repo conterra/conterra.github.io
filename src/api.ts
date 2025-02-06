@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 interface License {
     key: string;
     name: string;
@@ -116,4 +118,10 @@ export interface RepoDetails {
     watchers: number;
     watchers_count: number;
     web_commit_signoff_required: boolean;
+}
+
+export interface LinkProps {
+    children: ReactNode;
+    href: string;
+    leftIcon?: ReactNode;
 }

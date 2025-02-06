@@ -1,4 +1,4 @@
-import config from './config.json';
+import config from '../../config.json';
 
 export class BundleOverviewController {
 
@@ -35,7 +35,7 @@ export class BundleOverviewController {
     }
 
     public sortRepositoriesByTopics(repoData: any[]) {
-        const topics = config.gitHubRepoTopicList.topics;
+        const topics = config.BundleOverview.gitHubRepoTopicList.topics;
         const sortedRepos: any = [];
 
         topics.forEach((topic) => {

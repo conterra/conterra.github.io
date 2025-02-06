@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
-    Button, Card, CardBody, CardFooter, CardHeader, Center, Heading,
-    Spinner, Text
+    Button, Card, CardBody, CardFooter, CardHeader,
+    Center, Heading, Spinner, Text
 } from '@chakra-ui/react'
 import { Octokit } from "@octokit/core";
 import DOMPurify from 'dompurify';
@@ -23,28 +23,31 @@ export const NewsPage = () => {
                     org: 'conterra',
                     type: 'public',
                     sort: 'updated',
-                    per_page: 10
+                    per_page: 20
                 });
 
-                const currentMapappsRepoData = gitHubRepoData.data.filter((repo: any) => repo.topics.includes('4x') && repo.topics.includes('mapapps') && !repo.archived);
+                const currentMapappsRepoData = gitHubRepoData.data.filter((repo: any) => 
+                    repo.topics.includes('4x') && repo.topics.includes('mapapps') && !repo.archived
+                );
 
                 const newsData = [];
-                for (let i = 0; i < 5; i++) {
+                for (const repo of currentMapappsRepoData) {
+                    if (newsData.length >= 5) break;
                     try {
                         const gitHubNewsData = await octokit.request('GET /repos/{owner}/{repo}/releases', {
                             owner: 'conterra',
-                            repo: currentMapappsRepoData[i].name
+                            repo: repo.name
                         });
 
-                        const latestRelease = gitHubNewsData.data.find((release: any) => !release.prerelease);
-                        if (latestRelease) {
+                        const latestRelease = gitHubNewsData.data[0];
+                        if (latestRelease && !latestRelease.prerelease) {
                             newsData.push({
-                                repoTitle: currentMapappsRepoData[i].name,
+                                repoTitle: repo.name,
                                 ...latestRelease
                             });
                         }
                     } catch (error) {
-                        console.error('Error fetching API data:', error);
+                        console.error(`Error fetching releases for repo ${repo.name}:`, error);
                     }
                 }
 

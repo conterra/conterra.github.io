@@ -47,6 +47,14 @@ export const BundleOverview = () => {
 
         setFilteredRepos(filteredItems);
         setSortedRepos(controller.sortRepositoriesByTopics(filteredRepos));
+
+        octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+            owner: 'conterra',
+            repo: 'mapapps-portal-item-loader',
+            path: 'screenshot.JPG'
+        }).then((data) => {
+            console.log(data);
+        });
     };
 
     return (
@@ -64,43 +72,55 @@ export const BundleOverview = () => {
                         <div key={sortedRepo.topic} className='repo-overview__topic-section'>
                             <Flex direction={'column'}>
                                 <Heading size='lg' className='repo-overview__topic-section-header'>{sortedRepo.topic}</Heading>
-                                <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(300px, 1fr))'>
+
+                                <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(500px, 1fr))'>
                                     {sortedRepo.repos.map((repository: any, i: any) => (
                                         <div key={`${repository.name}-${i}`} className='col-md-4'>
-                                            <Card>
-                                                <CardHeader>
-                                                    <Heading textTransform='capitalize' size='sm'>
-                                                        {controller.formatRepositoryName(repository.name)}
-                                                    </Heading>
-                                                </CardHeader>
-                                                <CardBody>
-                                                    <Stack divider={<StackDivider />} spacing='4'>
-                                                        <Box>
-                                                            <Heading size='xs'>Beschreibung</Heading>
-                                                            <Text pt='2' fontSize='sm'>
-                                                                {repository.description}
-                                                            </Text>
-                                                        </Box>
-                                                        <Box>
-                                                            <Heading size='xs'>Zustand</Heading>
-                                                            <Text pt='2' fontSize='sm'>
-                                                                <Image src={`https://github.com/conterra/${repository.name}/actions/workflows/devnet-bundle-snapshot.yml/badge.svg`} />
-                                                                Letztes Update: Vor {controller.getTimeDifferenceFromPush(repository.updated_at)} Tagen
-                                                            </Text>
-                                                            {repository.open_issues_count} offene Issues
-                                                        </Box>
-                                                    </Stack>
-                                                </CardBody>
-                                                <CardFooter>
-                                                    <Button leftIcon={<MdOutlineExitToApp />} variant='solid' onClick={() => window.open(`${repository.svn_url}`, '_blank')}>
-                                                        Zur Detailseite
-                                                    </Button>
-                                                    {repository.homepage && (
-                                                        <Button leftIcon={<MdOutlineExitToApp />} variant='solid' colorScheme='blue' onClick={() => window.open(`${repository.homepage}`, '_blank')}>
-                                                            Zur Demo
+                                            <Card
+                                                direction={'column'}
+                                                overflow='hidden'
+                                                variant='outline'>
+                                                <Image
+                                                    objectFit='cover'
+                                                    maxW={{ base: '100%', sm: '200px' }}
+                                                    src={`https://raw.githubusercontent.com/conterra/${repository.name}/refs/heads/main/screenshot.JPG`}
+                                                    alt='Bundle Screenshot'
+                                                />
+                                                <Stack>
+                                                    <CardHeader>
+                                                        <Heading textTransform='capitalize' size='sm'>
+                                                            {controller.formatRepositoryName(repository.name)}
+                                                        </Heading>
+                                                    </CardHeader>
+                                                    <CardBody>
+                                                        <Stack divider={<StackDivider />} spacing='4'>
+                                                            <Box>
+                                                                <Heading size='xs'>Beschreibung</Heading>
+                                                                <Text pt='2' fontSize='sm'>
+                                                                    {repository.description}
+                                                                </Text>
+                                                            </Box>
+                                                            <Box>
+                                                                <Heading size='xs'>Zustand</Heading>
+                                                                <Text pt='2' fontSize='sm'>
+                                                                    <Image src={`https://github.com/conterra/${repository.name}/actions/workflows/devnet-bundle-snapshot.yml/badge.svg`} />
+                                                                    Letztes Update: Vor {controller.getTimeDifferenceFromPush(repository.updated_at)} Tagen
+                                                                </Text>
+                                                                {repository.open_issues_count} offene Issues
+                                                            </Box>
+                                                        </Stack>
+                                                    </CardBody>
+                                                    <CardFooter>
+                                                        <Button leftIcon={<MdOutlineExitToApp />} variant='solid' onClick={() => window.open(`${repository.svn_url}`, '_blank')}>
+                                                            Zur Detailseite
                                                         </Button>
-                                                    )}
-                                                </CardFooter>
+                                                        {repository.homepage && (
+                                                            <Button leftIcon={<MdOutlineExitToApp />} variant='solid' colorScheme='blue' onClick={() => window.open(`${repository.homepage}`, '_blank')}>
+                                                                Zur Demo
+                                                            </Button>
+                                                        )}
+                                                    </CardFooter>
+                                                </Stack>
                                             </Card>
                                         </div>
                                     ))}
