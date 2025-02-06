@@ -124,4 +124,5 @@ export interface LinkProps {
     children: ReactNode;
     href: string;
     leftIcon?: ReactNode;
+    className?: string;
 }

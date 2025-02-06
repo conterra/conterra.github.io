@@ -1,0 +1,8 @@
+.navigation-bar--container .navigation-bar--nav-link {
+    display: flex;
+    align-items: center;
+}
+
+.navigation-bar--container .navigation-bar--external-link-icon {
+    margin-right: 5px;
+}

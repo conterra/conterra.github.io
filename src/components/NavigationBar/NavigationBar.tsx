@@ -1,8 +1,10 @@
-import config from '../config.json';
+import config from '../../config.json';
 import { Box, Flex, HStack, Icon, Image, useColorModeValue } from '@chakra-ui/react'
 import { MdOpenInNew } from "react-icons/md";
 
-import type { LinkProps } from '../api';
+import type { LinkProps } from '../../api';
+
+import "./NavigationBar.css";
 
 const NavLink = (props: LinkProps) => {
     const { children } = props
@@ -18,6 +20,7 @@ const NavLink = (props: LinkProps) => {
                 bg: useColorModeValue('gray.200', 'gray.700'),
             }}
             href={props.href}
+            className='navigation-bar--nav-link'
         >
             {children}
         </Box>
@@ -27,7 +30,7 @@ const NavLink = (props: LinkProps) => {
 export const NavigationBar = () => {
     return (
         <>
-            <Flex>
+            <Flex className="navigation-bar--container">
                 <Box bg={useColorModeValue('gray.1', 'gray.900')} px={4} as="header" position="fixed" w="100%" zIndex="200" backgroundColor="white" borderBottom="2px solid #005587">
                     <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
                         <Box>
@@ -39,10 +42,13 @@ export const NavigationBar = () => {
                             <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
                                 {config.NavigationBar.links.map((link: any) => (
                                     link.isExternal ? (
-                                        <NavLink key={link.text} href={link.link}>
-                                            <Icon as={MdOpenInNew} />
-                                            {link.text}
-                                        </NavLink>
+                                        
+                                            
+                                            <NavLink key={link.text} href={link.link}>
+                                            <Icon className="navigation-bar--external-link-icon" as={MdOpenInNew} />
+                                                {link.text}
+                                            </NavLink>
+                                       
                                     ) : (
                                         <NavLink key={link.text} href={link.link}>
                                             {link.text}
