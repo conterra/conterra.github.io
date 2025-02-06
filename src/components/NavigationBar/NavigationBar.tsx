@@ -1,10 +1,12 @@
 import config from '../../config.json';
-import { Box, Flex, HStack, Icon, Image, useColorModeValue } from '@chakra-ui/react'
+import { Box, Flex, HStack, Icon, Image, LinkBox, LinkOverlay, useColorModeValue } from '@chakra-ui/react'
 import { MdOpenInNew } from "react-icons/md";
 
 import type { LinkProps } from '../../api';
 
 import "./NavigationBar.css";
+
+// conterra logo mit
 
 const NavLink = (props: LinkProps) => {
     const { children } = props
@@ -33,11 +35,15 @@ export const NavigationBar = () => {
             <Flex className="navigation-bar--container">
                 <Box bg={useColorModeValue('gray.1', 'gray.900')} px={4} as="header" position="fixed" w="100%" zIndex="200" backgroundColor="white" borderBottom="2px solid #005587">
                     <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-                        <Box>
-                            <Image src='../assets/Logo_con-terra_RGB_600px.png' w="100%" h="32px" >
-                            </Image>
-                        </Box>
-                        <p style={{ fontWeight: 500, fontSize: "x-large" }}>Developer Network</p>
+                        <LinkBox>
+                            <Box>
+                                <LinkOverlay href='/news'>
+                                    <Image src='../assets/Logo_con-terra_RGB_600px.png' w="100%" h="32px" >
+                                    </Image>
+                                </LinkOverlay>
+                            </Box>
+                        </LinkBox>
+                        <p style={{ fontWeight: 500, fontSize: "x-large" }}>Developer Network Bundles</p>
                         <Box>
                             <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
                                 {config.NavigationBar.links.map((link: any) => (
