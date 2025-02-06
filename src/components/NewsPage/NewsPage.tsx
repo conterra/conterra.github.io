@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
     Button, Card, CardBody, CardFooter, CardHeader,
-    Center, Heading, Spinner, Text
+    Center, Heading, Spinner, Stack, Text, Image
 } from '@chakra-ui/react'
 import { Octokit } from "@octokit/core";
 import DOMPurify from 'dompurify';
@@ -23,16 +23,16 @@ export const NewsPage = () => {
                     org: 'conterra',
                     type: 'public',
                     sort: 'updated',
-                    per_page: 20
+                    per_page: 30
                 });
 
-                const currentMapappsRepoData = gitHubRepoData.data.filter((repo: any) => 
+                const currentMapappsRepoData = gitHubRepoData.data.filter((repo: any) =>
                     repo.topics.includes('4x') && repo.topics.includes('mapapps') && !repo.archived
                 );
 
                 const newsData = [];
                 for (const repo of currentMapappsRepoData) {
-                    if (newsData.length >= 5) break;
+                    if (newsData.length > 5) break;
                     try {
                         const gitHubNewsData = await octokit.request('GET /repos/{owner}/{repo}/releases', {
                             owner: 'conterra',
@@ -62,20 +62,36 @@ export const NewsPage = () => {
     return (
         <>
             <div className="page-content__container newspage__container">
+                <Heading size='lg' className='repo-overview__topic-section-header'>Neueste Releases</Heading>
                 {gitHubNewsData ? gitHubNewsData.map((d: any, i: any) => (
                     <div key={`${d.id}-${i}`} className='col-md-4'>
-                        <Card>
-                            <CardHeader>
-                                <Heading size="md">{d.repoTitle}: {d.name}</Heading>
-                            </CardHeader>
-                            <CardBody>
-                                <Text>{parse(DOMPurify.sanitize(d.body.replace(/\n/g, '<br />')))}</Text>
-                            </CardBody>
-                            <CardFooter>
-                                <Button as="a" href={d.html_url} target="_blank" rel="noopener noreferrer">
-                                    View Repository
-                                </Button>
-                            </CardFooter>
+
+                        <Card
+                            direction={{ base: 'column', sm: 'row' }}
+                            overflow='hidden'
+                            variant='outline'
+                        >
+                            <Image
+                                objectFit='cover'
+                                maxW={{ base: '100%', sm: '400px' }}
+                                src={`https://raw.githubusercontent.com/conterra/${d.repoTitle}/refs/heads/main/screenshot.JPG`}
+                                alt='Bundle Screenshot'
+                            />
+
+                            <Stack>
+                                <CardHeader>
+                                    <Heading size="md">{d.repoTitle}: {d.name}</Heading>
+                                </CardHeader>
+                                <CardBody>
+                                    <Text>{parse(DOMPurify.sanitize(d.body.replace(/\n/g, '<br />')))}</Text>
+                                </CardBody>
+
+                                <CardFooter>
+                                    <Button as="a" href={d.html_url} target="_blank" rel="noopener noreferrer">
+                                        View Repository
+                                    </Button>
+                                </CardFooter>
+                            </Stack>
                         </Card>
                     </div>
                 )) :

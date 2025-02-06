@@ -9,7 +9,7 @@ import { Octokit } from "@octokit/core";
 import "./BundleOverview.css";
 import { BundleOverviewController } from './BundleOverviewController';
 
-import { MdSearch, MdOutlineExitToApp } from "react-icons/md";
+import { MdSearch, MdOpenInNew } from "react-icons/md";
 
 export const BundleOverview = () => {
     const [gitHubRepoData, setGitHubRepoData] = useState<any>(null);
@@ -48,13 +48,13 @@ export const BundleOverview = () => {
         setFilteredRepos(filteredItems);
         setSortedRepos(controller.sortRepositoriesByTopics(filteredRepos));
 
-        octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
-            owner: 'conterra',
-            repo: 'mapapps-portal-item-loader',
-            path: 'screenshot.JPG'
-        }).then((data) => {
-            console.log(data);
-        });
+        // octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+        //     owner: 'conterra',
+        //     repo: 'mapapps-portal-item-loader',
+        //     path: 'screenshot.JPG'
+        // }).then((data) => {
+        //     console.log(data);
+        // });
     };
 
     return (
@@ -111,11 +111,11 @@ export const BundleOverview = () => {
                                                         </Stack>
                                                     </CardBody>
                                                     <CardFooter>
-                                                        <Button leftIcon={<MdOutlineExitToApp />} variant='solid' onClick={() => window.open(`${repository.svn_url}`, '_blank')}>
+                                                        <Button leftIcon={<MdOpenInNew />} variant='solid' onClick={() => window.open(`${repository.svn_url}`, '_blank')}>
                                                             Zur Detailseite
                                                         </Button>
                                                         {repository.homepage && (
-                                                            <Button leftIcon={<MdOutlineExitToApp />} variant='solid' colorScheme='blue' onClick={() => window.open(`${repository.homepage}`, '_blank')}>
+                                                            <Button leftIcon={<MdOpenInNew />} variant='solid' colorScheme='blue' onClick={() => window.open(`${repository.homepage}`, '_blank')}>
                                                                 Zur Demo
                                                             </Button>
                                                         )}

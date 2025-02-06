@@ -42,13 +42,10 @@ export const NavigationBar = () => {
                             <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
                                 {config.NavigationBar.links.map((link: any) => (
                                     link.isExternal ? (
-                                        
-                                            
-                                            <NavLink key={link.text} href={link.link}>
+                                        <NavLink key={link.text} href={link.link}>
                                             <Icon className="navigation-bar--external-link-icon" as={MdOpenInNew} />
-                                                {link.text}
-                                            </NavLink>
-                                       
+                                            {link.text}
+                                        </NavLink>
                                     ) : (
                                         <NavLink key={link.text} href={link.link}>
                                             {link.text}
