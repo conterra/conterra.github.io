@@ -1,5 +1,19 @@
+#root .repo-overview--search-bar-container {
+    margin-top: 66px;
+}
+
+#root .repo-overview--search-bar-flex {
+    padding-top: 10px;
+    padding-right: 10px;
+    justify-content: end;
+}
+
+#root .repo-overview--search-bar-input {
+    width: 375px;
+}
+
 #root .repo-overview__container {
-    padding: 10px;
+    padding: 20px;
 }
 
 #root .repo-overview__container .chakra-input {
@@ -7,18 +21,14 @@
 }
 
 #root .repo-overview__container .repo-overview__topic-section {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 #root .repo-overview__container .repo-overview__topic-section-header {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 #root .repo-overview__container .chakra-card {
-    height: 100%
-}
-
-#root .repo-overview__container .chakra-card:hover {
-    transform: scale(1.05);
-    transition: transform 0.2s ease-in-out;
+    height: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 -2px 3px rgba(0, 0, 0, 0.08);
 }

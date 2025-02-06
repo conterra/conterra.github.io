@@ -59,49 +59,56 @@ export const BundleOverview = () => {
 
     return (
         <>
-            <div className="page-content__container repo-overview__container">
-                <InputGroup flex="1" >
-                    <InputLeftElement pointerEvents='none'>
-                        <MdSearch />
-                    </InputLeftElement>
-                    <Input type="text" value={searchItem} onChange={handleInputChange} placeholder="Developer Network Bundles durchsuchen" />
-                </InputGroup>
+            <div className="repo-overview--search-bar-container">
+                <Flex className="repo-overview--search-bar-flex">
+                    <InputGroup className="repo-overview--search-bar-input"  position={"fixed"} zIndex={1000}>
+                        <InputLeftElement pointerEvents='none'>
+                            <MdSearch />
+                        </InputLeftElement>
+                        <Input type="text" backgroundColor="white" value={searchItem} onChange={handleInputChange} placeholder="Developer Network Bundles durchsuchen" />
+                    </InputGroup>
+                </Flex>
 
+            </div>
+            <div className="page-content__container repo-overview__container">
                 {sortedRepos ? sortedRepos.map((sortedRepo: { topic: string, repos: any[] }) => (
                     sortedRepo.repos.length >= 1 && (
                         <div key={sortedRepo.topic} className='repo-overview__topic-section'>
                             <Flex direction={'column'}>
                                 <Heading size='lg' className='repo-overview__topic-section-header'>{sortedRepo.topic}</Heading>
 
-                                <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(500px, 1fr))'>
+                                <SimpleGrid spacing={7} templateColumns='repeat(auto-fill, minmax(300px, 1fr))'>
                                     {sortedRepo.repos.map((repository: any, i: any) => (
                                         <div key={`${repository.name}-${i}`} className='col-md-4'>
                                             <Card
                                                 direction={'column'}
                                                 overflow='hidden'
-                                                variant='outline'>
+                                                variant='elevated'>
                                                 <Image
                                                     objectFit='cover'
-                                                    maxW={{ base: '100%', sm: '200px' }}
+                                                    maxW={{ base: '100%', sm: '100%' }}
                                                     src={`https://raw.githubusercontent.com/conterra/${repository.name}/refs/heads/main/screenshot.JPG`}
                                                     alt='Bundle Screenshot'
                                                 />
+                                                {/* TODO bilder weg vom rand */}
                                                 <Stack>
                                                     <CardHeader>
                                                         <Heading textTransform='capitalize' size='sm'>
                                                             {controller.formatRepositoryName(repository.name)}
                                                         </Heading>
+                                                        <Text pt='2' fontSize='sm'>
+                                                            {repository.description}
+                                                        </Text>
                                                     </CardHeader>
                                                     <CardBody>
-                                                        <Stack divider={<StackDivider />} spacing='4'>
-                                                            <Box>
+                                                        <Stack spacing='4'>
+                                                            {/* <Box>
                                                                 <Heading size='xs'>Beschreibung</Heading>
-                                                                <Text pt='2' fontSize='sm'>
-                                                                    {repository.description}
-                                                                </Text>
-                                                            </Box>
+                                                               
+                                                            </Box> */}
                                                             <Box>
                                                                 <Heading size='xs'>Zustand</Heading>
+                                                                {/* TODO text kappen */}
                                                                 <Text pt='2' fontSize='sm'>
                                                                     <Image src={`https://github.com/conterra/${repository.name}/actions/workflows/devnet-bundle-snapshot.yml/badge.svg`} />
                                                                     Letztes Update: Vor {controller.getTimeDifferenceFromPush(repository.updated_at)} Tagen
@@ -111,6 +118,7 @@ export const BundleOverview = () => {
                                                         </Stack>
                                                     </CardBody>
                                                     <CardFooter>
+                                                        {/* <Stack divider={<StackDivider />}></Stack> */}
                                                         <Button leftIcon={<MdOpenInNew />} variant='solid' onClick={() => window.open(`${repository.svn_url}`, '_blank')}>
                                                             Zur Detailseite
                                                         </Button>

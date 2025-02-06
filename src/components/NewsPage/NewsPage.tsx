@@ -7,6 +7,8 @@ import { Octokit } from "@octokit/core";
 import DOMPurify from 'dompurify';
 import parse from 'html-react-parser';
 
+import { MdOpenInNew } from "react-icons/md";
+
 import "./NewsPage.css";
 
 export const NewsPage = () => {
@@ -87,20 +89,29 @@ export const NewsPage = () => {
                                 </CardBody>
 
                                 <CardFooter>
-                                    <Button as="a" href={d.html_url} target="_blank" rel="noopener noreferrer">
+                                    <Button leftIcon={<MdOpenInNew />} as="a" href={d.html_url} target="_blank" rel="noopener noreferrer">
                                         View Repository
                                     </Button>
+                                    {d.homepage && (
+                                        <Button leftIcon={<MdOpenInNew />} variant='solid' colorScheme='blue' onClick={() => window.open(`${d.homepage}`, '_blank')}>
+                                            Zur Demo
+                                        </Button>
+                                    )}
                                 </CardFooter>
                             </Stack>
                         </Card>
                     </div>
                 )) :
                     <div>
-                        <div>
-                            <Center h="full">
-                                <Spinner size={'xl'} />
-                            </Center>
-                        </div>
+                        <Center h="full">
+                            <Spinner
+                                thickness='4px'
+                                speed='0.65s'
+                                emptyColor='gray.200'
+                                color='blue.500'
+                                size='xl'
+                            />
+                        </Center>
                     </div>
                 }
             </div>
