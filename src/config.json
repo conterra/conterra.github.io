@@ -1,0 +1,37 @@
+{
+    "BundleOverview": {
+        "gitHubRepoTopicList": {
+            "topics": [
+                {
+                    "topic": "search",
+                    "displayValue": "Suchen und Filtern"
+                },
+                {
+                    "topic": "analysis",
+                    "displayValue": "Analyse-Tools"
+                },
+                {
+                    "topic": "3d",
+                    "displayValue": "3D Funktionen"
+                }
+            ]
+        }
+    },
+    "NavigationBar": {
+        "links": [
+            {
+                "text": "News",
+                "link": "/news"
+            },
+            {
+                "text": "Übersicht",
+                "link": "/overview"
+            },
+            {
+                "text": "Kontakt",
+                "link": "https://www.conterra.de/kontakt",
+                "isExternal": true
+            }
+        ]
+    }
+}
