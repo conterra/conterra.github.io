@@ -1,5 +1,6 @@
-#root .repo-overview--search-bar-container {
-    margin-top: 66px;
+
+#root .repo-overview__container {
+    padding: 20px;
 }
 
 #root .repo-overview--search-bar-flex {
@@ -12,8 +13,8 @@
     width: 375px;
 }
 
-#root .repo-overview__container {
-    padding: 20px;
+#root .repo-overview--sidebar-container {
+    margin-top: 50px;
 }
 
 #root .repo-overview__container .chakra-input {
@@ -30,5 +31,12 @@
 
 #root .repo-overview__container .chakra-card {
     height: 100%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 -2px 3px rgba(0, 0, 0, 0.08);
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+#root .repo-overview__container .chakra-card img {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
 }

@@ -1,17 +1,20 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
-    Box, Button, Card, CardBody, CardFooter, CardHeader,
+    Box, Button, ButtonGroup, Card, CardBody, CardFooter, CardHeader,
     Center, Flex, Heading, Image, Input, InputGroup,
     InputLeftElement, SimpleGrid, Spinner, Stack, StackDivider, Text
 } from '@chakra-ui/react'
 import { Octokit } from "@octokit/core";
+import { useNavigate } from "react-router";
 
 import "./BundleOverview.css";
 import { BundleOverviewController } from './BundleOverviewController';
 
-import { MdSearch, MdOpenInNew } from "react-icons/md";
+import { MdSearch, MdOpenInNew, MdOutlineExitToApp } from "react-icons/md";
 
 export const BundleOverview = () => {
+    const myRef = useRef<null | HTMLDivElement>(null);
+
     const [gitHubRepoData, setGitHubRepoData] = useState<any>(null);
     const [searchItem, setSearchItem] = useState('');
     const [filteredRepos, setFilteredRepos] = useState(gitHubRepoData);
@@ -57,20 +60,44 @@ export const BundleOverview = () => {
         // });
     };
 
+    const executeScroll = () => {
+        if (myRef.current) {
+            myRef.current.scrollIntoView()
+        }
+
+    }
+
     return (
         <>
-            <div className="repo-overview--search-bar-container">
-                <Flex className="repo-overview--search-bar-flex">
-                    <InputGroup className="repo-overview--search-bar-input"  position={"fixed"} zIndex={1000}>
-                        <InputLeftElement pointerEvents='none'>
-                            <MdSearch />
-                        </InputLeftElement>
-                        <Input type="text" backgroundColor="white" value={searchItem} onChange={handleInputChange} placeholder="Developer Network Bundles durchsuchen" />
-                    </InputGroup>
-                </Flex>
-
-            </div>
             <div className="page-content__container repo-overview__container">
+                <div className="repo-overview--search-bar-container">
+                    <Flex className="repo-overview--search-bar-flex">
+                        <InputGroup className="repo-overview--search-bar-input" position={"fixed"} zIndex={1000}>
+                            <InputLeftElement pointerEvents='none'>
+                                <MdSearch />
+                            </InputLeftElement>
+                            <Input type="text" backgroundColor="white" value={searchItem} onChange={handleInputChange} placeholder="Developer Network Bundles durchsuchen" />
+                        </InputGroup>
+                    </Flex>
+                </div>
+
+                {/* <Box
+                    borderLeft="1px"
+                    position={"fixed"}
+                    right={0}
+                    h="full"
+                    w="200px"
+                    className="repo-overview--sidebar-container"
+                >
+                    <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
+                        <Box>
+                            <Text onClick={() => executeScroll()}>Test 1</Text>
+                            <Text onClick={() => executeScroll()}>Test 2</Text>
+                            <Text onClick={() => executeScroll()}>Test 3</Text>
+                        </Box>
+                    </Flex>
+                </Box> */}
+
                 {sortedRepos ? sortedRepos.map((sortedRepo: { topic: string, repos: any[] }) => (
                     sortedRepo.repos.length >= 1 && (
                         <div key={sortedRepo.topic} className='repo-overview__topic-section'>
@@ -79,7 +106,7 @@ export const BundleOverview = () => {
 
                                 <SimpleGrid spacing={7} templateColumns='repeat(auto-fill, minmax(300px, 1fr))'>
                                     {sortedRepo.repos.map((repository: any, i: any) => (
-                                        <div key={`${repository.name}-${i}`} className='col-md-4'>
+                                        <div key={`${repository.name}-${i}`} >
                                             <Card
                                                 direction={'column'}
                                                 overflow='hidden'
@@ -92,47 +119,39 @@ export const BundleOverview = () => {
                                                 />
                                                 {/* TODO bilder weg vom rand */}
                                                 <Stack>
-                                                    <CardHeader>
+                                                    <CardBody>
                                                         <Heading textTransform='capitalize' size='sm'>
                                                             {controller.formatRepositoryName(repository.name)}
                                                         </Heading>
-                                                        <Text pt='2' fontSize='sm'>
+                                                        <Text noOfLines={5} pt='2' fontSize='sm'>
                                                             {repository.description}
                                                         </Text>
-                                                    </CardHeader>
-                                                    <CardBody>
                                                         <Stack spacing='4'>
-                                                            {/* <Box>
-                                                                <Heading size='xs'>Beschreibung</Heading>
-                                                               
-                                                            </Box> */}
                                                             <Box>
-                                                                <Heading size='xs'>Zustand</Heading>
-                                                                {/* TODO text kappen */}
                                                                 <Text pt='2' fontSize='sm'>
-                                                                    <Image src={`https://github.com/conterra/${repository.name}/actions/workflows/devnet-bundle-snapshot.yml/badge.svg`} />
-                                                                    Letztes Update: Vor {controller.getTimeDifferenceFromPush(repository.updated_at)} Tagen
+                                                                    Letztes Update vor {controller.getTimeDifferenceFromPush(repository.updated_at)} Tagen, {repository.open_issues_count} offene Issues
                                                                 </Text>
-                                                                {repository.open_issues_count} offene Issues
                                                             </Box>
                                                         </Stack>
                                                     </CardBody>
                                                     <CardFooter>
-                                                        {/* <Stack divider={<StackDivider />}></Stack> */}
-                                                        <Button leftIcon={<MdOpenInNew />} variant='solid' onClick={() => window.open(`${repository.svn_url}`, '_blank')}>
-                                                            Zur Detailseite
-                                                        </Button>
-                                                        {repository.homepage && (
-                                                            <Button leftIcon={<MdOpenInNew />} variant='solid' colorScheme='blue' onClick={() => window.open(`${repository.homepage}`, '_blank')}>
-                                                                Zur Demo
+                                                        <ButtonGroup>
+                                                            <Button leftIcon={<MdOpenInNew />} variant='solid' onClick={() => window.open(`${repository.svn_url}`, '_blank')}>
+                                                                Zur Detailseite
                                                             </Button>
-                                                        )}
+                                                            {repository.homepage && (
+                                                                <Button leftIcon={<MdOutlineExitToApp />} variant='solid' colorScheme='blue' onClick={() => window.open(`${repository.homepage}`, '_blank')}>
+                                                                    Zur Demo
+                                                                </Button>
+                                                            )}
+                                                        </ButtonGroup>
                                                     </CardFooter>
                                                 </Stack>
                                             </Card>
                                         </div>
                                     ))}
                                 </SimpleGrid>
+                                <div ref={myRef}>Test</div>
                             </Flex>
                         </div>
                     )
