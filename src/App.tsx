@@ -1,6 +1,6 @@
 import './App.css';
 import { ChakraProvider } from '@chakra-ui/react'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import { NavigationBar } from './components/NavigationBar/NavigationBar'
 import { PageNotFound } from './components/PageNotFound'
@@ -14,8 +14,8 @@ function App() {
             <BrowserRouter>
                 <NavigationBar />
                 <Routes>
-                    <Route path="/" element={<NewsPage />} />
-                    <Route path="/about" element={<AboutPage />} />
+                    <Route path="/" element={<Navigate to="/about" replace />} />
+                    <Route path="about" element={<AboutPage />} />
                     <Route path="news" element={<NewsPage />} />
                     <Route path="overview" element={<BundleOverview />} />
                     <Route path="*" element={<PageNotFound />} />
