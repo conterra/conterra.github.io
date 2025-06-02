@@ -1,6 +1,6 @@
 import './App.css';
 import { ChakraProvider } from '@chakra-ui/react'
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { NavigationBar } from './components/NavigationBar/NavigationBar'
 import { PageNotFound } from './components/PageNotFound'
