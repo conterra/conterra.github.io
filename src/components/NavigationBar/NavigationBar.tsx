@@ -1,31 +1,46 @@
 import config from '../../config.json';
 import { Box, Flex, HStack, Icon, Image, LinkBox, LinkOverlay, useColorModeValue } from '@chakra-ui/react'
 import { MdOpenInNew, MdMailOutline } from "react-icons/md";
+import { Link as RouterLink } from 'react-router-dom';
 
 import type { LinkProps } from '../../api';
 
 import "./NavigationBar.css";
 
 const NavLink = (props: LinkProps) => {
-    const { children } = props
-
+    const { children, href, target } = props;
+    const hoverBg = useColorModeValue('gray.200', 'gray.700');
+    // Use RouterLink for internal links, <a> for external
+    const isExternal = href?.startsWith('http') || href?.startsWith('mailto:');
+    if (isExternal) {
+        return (
+            <Box
+                as="a"
+                px={2}
+                py={1}
+                rounded={'md'}
+                _hover={{ textDecoration: 'none', bg: hoverBg }}
+                href={href}
+                target={target}
+                className='navigation-bar--nav-link'
+            >
+                {children}
+            </Box>
+        );
+    }
     return (
         <Box
-            as="a"
+            as={RouterLink}
+            to={href || '/'}
             px={2}
             py={1}
             rounded={'md'}
-            _hover={{
-                textDecoration: 'none',
-                bg: useColorModeValue('gray.200', 'gray.700'),
-            }}
-            href={props.href}
-            target={props.target}
+            _hover={{ textDecoration: 'none', bg: hoverBg }}
             className='navigation-bar--nav-link'
         >
             {children}
         </Box>
-    )
+    );
 }
 
 export const NavigationBar = () => {
@@ -36,7 +51,7 @@ export const NavigationBar = () => {
                     <Flex h={16} alignItems={'center'} justifyContent={'center'} position="relative">
                         <LinkBox position="absolute" left={0} top={0} bottom={0} display="flex" alignItems="center">
                             <Box>
-                                <LinkOverlay href='/news'>
+                                <LinkOverlay as={RouterLink} to="/news">
                                     <Image src='../assets/Logo_con-terra_RGB_600px.png' w="100%" h="32px" />
                                 </LinkOverlay>
                             </Box>
