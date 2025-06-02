@@ -36,6 +36,10 @@
     "NavigationBar": {
         "links": [
             {
+                "text": "Über uns",
+                "link": "/about"
+            },
+            {
                 "text": "News",
                 "link": "/news"
             },
