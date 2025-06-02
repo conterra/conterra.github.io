@@ -4,14 +4,14 @@ export class BundleOverviewController {
 
     public async fetchGitHubRepoData(octokit: any): Promise<any> {
         try {
-            const gitHubRepoData = await octokit.request('GET /orgs/{org}/repos', {
+            const gitHubRepoData = await octokit.paginate('GET /orgs/{org}/repos', {
                 org: 'conterra',
                 type: 'name',
                 sort: 'full_name',
                 per_page: 100
             });
 
-            const filteredData = gitHubRepoData.data.filter((repo: any) =>
+            const filteredData = gitHubRepoData.filter((repo: any) =>
                 repo.topics.includes('4x') && repo.topics.includes('mapapps') && !repo.archived
             );
 

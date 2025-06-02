@@ -1,10 +1,22 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
 import {
-    Center, Flex, Heading, SimpleGrid, Spinner, Box, Text,
+    useEffect,
+    useMemo,
+    useRef,
+    useState
+} from 'react';
+import {
+    Center,
+    Flex,
+    Heading,
+    SimpleGrid,
+    Spinner,
+    Box,
+    Text,
     Card,
     CardBody
 } from '@chakra-ui/react'
 import { Octokit } from "@octokit/core";
+import { paginateRest } from "@octokit/plugin-paginate-rest";
 
 import "./BundleOverview.css";
 import { BundleOverviewController } from './BundleOverviewController';
@@ -23,7 +35,8 @@ export const BundleOverview = () => {
     const [sortedRepos, setSortedRepos] = useState<any>(null);
     const [activeTopic, setActiveTopic] = useState<string | null>(null);
 
-    const octokit = useMemo(() => new Octokit({
+    const MyOctokit = Octokit.plugin(paginateRest);
+    const octokit = useMemo(() => new MyOctokit({
         auth: process.env.REACT_APP_GITHUB_TOKEN
     }), []);
     const controller = useMemo(() => new BundleOverviewController(), []);
