@@ -7,21 +7,7 @@ interface MinimapProps {
 }
 
 export const Minimap = ({ sortedRepos, scrollToHeading, activeTopic }: MinimapProps) => (
-  <Box
-    className="repo-overview--sidebar-container"
-    position="fixed"
-    top="120px"
-    right="30px"
-    zIndex={1200}
-    minW="220px"
-    maxW="250px"
-    p={4}
-    h="fit-content"
-    bg="white"
-    boxShadow="lg"
-    borderRadius="md"
-    border="1px solid #e2e8f0"
-  >
+  <Box className="repo-overview--minimap-container">
     <Heading size="md" mb={4}>Themenübersicht</Heading>
     {sortedRepos && sortedRepos.length > 0 ? (
       sortedRepos.map((sortedRepo) => (

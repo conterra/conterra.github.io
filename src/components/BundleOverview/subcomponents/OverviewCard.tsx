@@ -17,7 +17,6 @@ export const OverviewCard = ({ repository, controller }: OverviewCardProps) => (
             src={`https://raw.githubusercontent.com/conterra/${repository.name}/refs/heads/main/screenshot.JPG`}
             alt='Bundle Screenshot'
         />
-        {/* TODO bilder weg vom rand */}
         <Stack>
             <CardBody>
                 <Heading textTransform='capitalize' size='sm'>

@@ -132,48 +132,46 @@ export const BundleOverview = () => {
                                     </Center>
                                 </div>
                                 : error ?
-                                <Center h="40vh">
-                                    <Card bg="red.50" borderColor="red.300" borderWidth={1} p={6} minW="350px" boxShadow="sm">
-                                        <CardBody>
-                                            <Heading size="md" color="red.600" mb={2}>Fehler</Heading>
-                                            <Text color="red.700">{error}</Text>
-                                        </CardBody>
-                                    </Card>
-                                </Center>
-                                : sortedRepos.map(
-                                    (sortedRepo: { topic: string, repos: any[] }) => (
-                                        sortedRepo.repos.length >= 1 && (
-                                            <div key={sortedRepo.topic} className='repo-overview__topic-section'>
-                                                <Flex direction={'column'}>
-                                                    <Heading
-                                                        size='lg'
-                                                        className='repo-overview__topic-section-header'
-                                                        ref={el => headingRefs.current[sortedRepo.topic] = el}
-                                                        data-topic={sortedRepo.topic}
-                                                        style={{ scrollMarginTop: 100 }}
-                                                    >
-                                                        {sortedRepo.topic}
-                                                    </Heading>
-                                                    <SimpleGrid spacing={7} templateColumns='repeat(auto-fill, minmax(300px, 1fr))'>
-                                                        {sortedRepo.repos.map((repository: any, i: any) => (
-                                                            <div key={`${repository.name}-${i}`} >
-                                                                <OverviewCard repository={repository} controller={controller} />
-                                                            </div>
-                                                        ))}
-                                                    </SimpleGrid>
-                                                </Flex>
-                                            </div>
-                                        )
-                                    ))
+                                    <Center h="40vh">
+                                        <Card bg="red.50" borderColor="red.300" borderWidth={1} p={6} minW="350px" boxShadow="sm">
+                                            <CardBody>
+                                                <Heading size="md" color="red.600" mb={2}>Fehler</Heading>
+                                                <Text color="red.700">{error}</Text>
+                                            </CardBody>
+                                        </Card>
+                                    </Center>
+                                    : sortedRepos.map(
+                                        (sortedRepo: { topic: string, repos: any[] }) => (
+                                            sortedRepo.repos.length >= 1 && (
+                                                <div key={sortedRepo.topic} className='repo-overview__topic-section'>
+                                                    <Flex direction={'column'}>
+                                                        <Heading
+                                                            size='lg'
+                                                            className='repo-overview__topic-section-header'
+                                                            ref={el => headingRefs.current[sortedRepo.topic] = el}
+                                                            data-topic={sortedRepo.topic}
+                                                            style={{ scrollMarginTop: 100 }}
+                                                        >
+                                                            {sortedRepo.topic}
+                                                        </Heading>
+                                                        <SimpleGrid spacing={7} templateColumns='repeat(auto-fill, minmax(300px, 1fr))'>
+                                                            {sortedRepo.repos.map((repository: any, i: any) => (
+                                                                <div key={`${repository.name}-${i}`} >
+                                                                    <OverviewCard repository={repository} controller={controller} />
+                                                                </div>
+                                                            ))}
+                                                        </SimpleGrid>
+                                                    </Flex>
+                                                </div>
+                                            )
+                                        ))
                             }
                         </Box>
                     </Box>
                     {/* Sidebar (Right) */}
-                    <Box minW="320px" maxW="400px" width="28%" className="repo-overview__sidebar" mt={6}>
+                    <Box minW="320px" maxW="400px" width="28%" className="repo-overview__sidebar">
                         <SearchBar searchItem={searchItem} handleInputChange={handleInputChange} />
-                        <Box mt={4}>
-                            <Minimap sortedRepos={sortedRepos || []} scrollToHeading={scrollToHeading} activeTopic={activeTopic || undefined} />
-                        </Box>
+                        <Minimap sortedRepos={sortedRepos || []} scrollToHeading={scrollToHeading} activeTopic={activeTopic || undefined} />
                     </Box>
                 </Flex>
             </div>

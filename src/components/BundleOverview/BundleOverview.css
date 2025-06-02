@@ -1,5 +1,5 @@
 #root .repo-overview__container {
-    padding: 20px;
+    padding-left: 20px;
 }
 
 #root .repo-overview--search-bar-flex {
@@ -12,8 +12,18 @@
     width: 375px;
 }
 
-#root .repo-overview--sidebar-container {
-    margin-top: 50px;
+#root .repo-overview--minimap-container {
+    position: fixed;
+    top: 120px;
+    right: 10px;
+    z-index: 1200;
+    min-width: 220px;
+    max-width: 250px;
+    padding: 10px;
+    height: fit-content;
+    background: white;
+    border-radius: 0.375rem;
+    border: 1px solid #e2e8f0;
 }
 
 #root .minimap-active-topic {
