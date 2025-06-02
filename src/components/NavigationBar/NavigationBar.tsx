@@ -32,16 +32,16 @@ export const NavigationBar = () => {
         <>
             <Flex className="navigation-bar--container">
                 <Box bg={useColorModeValue('gray.1', 'gray.900')} px={4} as="header" position="fixed" w="100%" zIndex="200" backgroundColor="white" borderBottom="2px solid #005587">
-                    <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-                        <LinkBox>
+                    <Flex h={16} alignItems={'center'} justifyContent={'center'} position="relative">
+                        <LinkBox position="absolute" left={0} top={0} bottom={0} display="flex" alignItems="center">
                             <Box>
                                 <LinkOverlay href='/news'>
                                     <Image src='../assets/Logo_con-terra_RGB_600px.png' w="100%" h="32px" />
                                 </LinkOverlay>
                             </Box>
                         </LinkBox>
-                        <p style={{ fontWeight: 500, fontSize: "x-large" }}>Developer Network Bundles</p>
-                        <Box>
+                        <p style={{ fontWeight: 500, fontSize: "x-large", textAlign: "center" }}>Developer Network Bundles</p>
+                        <Box position="absolute" right={0} top={0} bottom={0} display="flex" alignItems="center">
                             <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
                                 {config.NavigationBar.links.map((link: any) => (
                                     link.isExternal ? (
