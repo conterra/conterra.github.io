@@ -20,6 +20,7 @@ const NavLink = (props: LinkProps) => {
                 bg: useColorModeValue('gray.200', 'gray.700'),
             }}
             href={props.href}
+            target={props.target}
             className='navigation-bar--nav-link'
         >
             {children}
@@ -45,7 +46,7 @@ export const NavigationBar = () => {
                             <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
                                 {config.NavigationBar.links.map((link: any) => (
                                     link.isExternal ? (
-                                        <NavLink key={link.text} href={link.link}>
+                                        <NavLink key={link.text} href={link.link} target="_blank">
                                             <Icon className="navigation-bar--external-link-icon" as={MdOpenInNew} />
                                             {link.text}
                                         </NavLink>

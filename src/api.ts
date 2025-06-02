@@ -123,6 +123,7 @@ export interface RepoDetails {
 export interface LinkProps {
     children: ReactNode;
     href: string;
+    target?: string;
     leftIcon?: ReactNode;
     className?: string;
 }
