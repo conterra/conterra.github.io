@@ -73,17 +73,19 @@ export const BundleOverview = () => {
 
         if (!searchTerm) {
             setFilteredRepos(gitHubRepoData);
+            setSortedRepos(controller.sortRepositoriesByTopics(gitHubRepoData));
+
             return;
+        } else {
+            const filteredItems = gitHubRepoData.filter((repo: any) =>
+                repo?.name?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
+                repo?.description?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
+                repo?.topics?.some((topic: string) => topic.toLowerCase().includes(searchTerm?.toLowerCase()))
+            );
+
+            setFilteredRepos(filteredItems);
+            setSortedRepos(controller.sortRepositoriesByTopics(filteredRepos));
         }
-
-        const filteredItems = gitHubRepoData.filter((repo: any) =>
-            repo?.name?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
-            repo?.description?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
-            repo?.topics?.some((topic: string) => topic.toLowerCase().includes(searchTerm?.toLowerCase()))
-        );
-
-        setFilteredRepos(filteredItems);
-        setSortedRepos(controller.sortRepositoriesByTopics(filteredRepos));
     };
 
     const scrollToHeading = (topic: string) => {

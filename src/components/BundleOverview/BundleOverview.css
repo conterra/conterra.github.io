@@ -17,8 +17,7 @@
     top: 120px;
     right: 10px;
     z-index: 1200;
-    min-width: 220px;
-    max-width: 250px;
+    width: 235px;
     padding: 10px;
     height: fit-content;
     background: white;

@@ -1,5 +1,5 @@
-import { Flex, InputGroup, InputLeftElement, Input } from '@chakra-ui/react';
-import { MdSearch } from 'react-icons/md';
+import { Flex, InputGroup, InputLeftElement, Input, InputRightElement, IconButton } from '@chakra-ui/react';
+import { MdSearch, MdClose } from 'react-icons/md';
 
 interface SearchBarProps {
   searchItem: string;
@@ -20,6 +20,18 @@ export const SearchBar = ({ searchItem, handleInputChange }: SearchBarProps) => 
           onChange={handleInputChange}
           placeholder="Developer Network Bundles durchsuchen"
         />
+        {searchItem && (
+          <InputRightElement>
+            <IconButton
+              aria-label="Clear search"
+              icon={<MdClose />}
+              size="sm"
+              variant="ghost"
+              onClick={() => handleInputChange({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>)}
+              tabIndex={-1}
+            />
+          </InputRightElement>
+        )}
       </InputGroup>
     </Flex>
   </div>
