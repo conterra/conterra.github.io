@@ -3,12 +3,28 @@
         "gitHubRepoTopicList": {
             "topics": [
                 {
+                    "topic": "highlight",
+                    "displayValue": "Highlights"
+                },
+                {
                     "topic": "search",
                     "displayValue": "Suchen und Filtern"
                 },
                 {
+                    "topic": "contents",
+                    "displayValue": "Inhalte und Darstellung"
+                },
+                {
                     "topic": "analysis",
                     "displayValue": "Analyse-Tools"
+                },
+                {
+                    "topic": "usability",
+                    "displayValue": "Benutzungsfreundlichkeit"
+                },
+                {
+                    "topic": "popups",
+                    "displayValue": "Popups"
                 },
                 {
                     "topic": "3d",
@@ -29,8 +45,8 @@
             },
             {
                 "text": "Kontakt",
-                "link": "https://www.conterra.de/kontakt",
-                "isExternal": true
+                "link": "mailto:developernetwork@conterra.de",
+                "isMailto": true
             },
             {
                 "text": "Impressum",
