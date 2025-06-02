@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Card, CardBody, Center, Heading, Spinner, Text } from '@chakra-ui/react'
 import { Octokit } from "@octokit/core";
+import { paginateRest } from "@octokit/plugin-paginate-rest";
 
 import "./NewsPage.css";
 import { NewsPageController } from './NewsPageController';
@@ -11,7 +12,8 @@ export const NewsPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    const octokit = useMemo(() => new Octokit({
+    const MyOctokit = Octokit.plugin(paginateRest);
+    const octokit = useMemo(() => new MyOctokit({
         auth: process.env.REACT_APP_GITHUB_TOKEN
     }), []);
     const controller = useMemo(() => new NewsPageController(), []);

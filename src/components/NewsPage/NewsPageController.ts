@@ -1,41 +1,47 @@
-import config from '../../config.json';
-
 export class NewsPageController {
 
     fetchGitHubRepoData = async (octokit: any) => {
         try {
-            const gitHubRepoData = await octokit.request('GET /orgs/{org}/repos', {
+            const gitHubRepoData = await octokit.paginate('GET /orgs/{org}/repos', {
                 org: 'conterra',
                 type: 'public',
                 sort: 'updated',
-                per_page: 30
+                per_page: 100
             });
 
-            const currentMapappsRepoData = gitHubRepoData.data.filter((repo: any) =>
+            const currentMapappsRepoData = gitHubRepoData.filter((repo: any) =>
                 repo.topics.includes('4x') && repo.topics.includes('mapapps') && !repo.archived
             );
-
-            const newsData = [];
-            for (const repo of currentMapappsRepoData) {
-                if (newsData.length > 5) break;
+            const allLatestReleases: any[] = []
+            await Promise.all(currentMapappsRepoData.map(async (repo: any) => {
                 try {
-                    const gitHubNewsData = await octokit.request('GET /repos/{owner}/{repo}/releases', {
+                    const releaseData = await octokit.request('GET /repos/{owner}/{repo}/releases/latest', {
                         owner: 'conterra',
                         repo: repo.name
-                    });
+                    })
 
-                    const latestRelease = gitHubNewsData.data[0];
-                    if (latestRelease && !latestRelease.prerelease) {
-                        newsData.push({
-                            repoTitle: repo.name,
-                            homepage: repo.homepage,
-                            date: latestRelease.published_at,
-                            ...latestRelease
-                        });
+                    if (releaseData && releaseData?.data && !releaseData?.data?.prerelease) {
+                        allLatestReleases.push(
+                            { repo: repo, release: releaseData.data }
+                        )
                     }
                 } catch (error) {
-                    console.error(`Error fetching releases for repo ${repo.name}:`, error);
+                    console.warn(`Error fetching latest release for repo ${repo.name}:`, error);
                 }
+
+            }));
+
+            const sortedReleases = allLatestReleases.sort((a: any, b: any) => new Date(b.release.published_at).getTime() - new Date(a.release.published_at).getTime());
+            const newsData: any[] = [];
+            for (let i = 0; i < 5; i++) {
+                const latestRelease = sortedReleases[i];
+
+                newsData.push({
+                    repoTitle: latestRelease.repo.name,
+                    homepage: latestRelease.repo.homepage,
+                    date: latestRelease.release.published_at,
+                    ...latestRelease.release
+                });
             }
 
             return newsData;

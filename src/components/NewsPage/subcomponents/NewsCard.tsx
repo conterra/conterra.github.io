@@ -25,7 +25,7 @@ export const NewsCard = ({ release, controller }: NewsCardProps) => (
                 <Heading textTransform='capitalize' size="md">
                     {controller.formatRepositoryName(release.repoTitle)}: {release.name} ({controller.getDate(release.published_at)})
                 </Heading>
-                <Text>{parse(DOMPurify.sanitize(release.body.replace(/\n/g, '<br />')))}</Text>
+                <Text>{parse(DOMPurify.sanitize(release?.body?.replace(/\n/g, '<br />')))}</Text>
             </CardBody>
             <CardFooter>
                 <ButtonGroup>
