@@ -6,3 +6,7 @@
 .navigation-bar--container .navigation-bar--external-link-icon {
     margin-right: 5px;
 }
+
+.navigation-bar--container .chakra-linkbox img {
+    padding: 6px;
+}
