@@ -28,14 +28,14 @@ export class NewsPageController {
                 } catch (error) {
                     console.warn(`Error fetching latest release for repo ${repo.name}:`, error);
                 }
-
             }));
 
-            const sortedReleases = allLatestReleases.sort((a: any, b: any) => new Date(b.release.published_at).getTime() - new Date(a.release.published_at).getTime());
+            const sortedReleases = allLatestReleases
+                .filter((item: any) => item && item.release && item.release.published_at)
+                .sort((a: any, b: any) => new Date(b.release.published_at).getTime() - new Date(a.release.published_at).getTime());
             const newsData: any[] = [];
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < Math.min(5, sortedReleases.length); i++) {
                 const latestRelease = sortedReleases[i];
-
                 newsData.push({
                     repoTitle: latestRelease.repo.name,
                     homepage: latestRelease.repo.homepage,
