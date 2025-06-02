@@ -1,12 +1,10 @@
 import config from '../../config.json';
 import { Box, Flex, HStack, Icon, Image, LinkBox, LinkOverlay, useColorModeValue } from '@chakra-ui/react'
-import { MdOpenInNew } from "react-icons/md";
+import { MdOpenInNew, MdMailOutline } from "react-icons/md";
 
 import type { LinkProps } from '../../api';
 
 import "./NavigationBar.css";
-
-// conterra logo mit
 
 const NavLink = (props: LinkProps) => {
     const { children } = props
@@ -51,11 +49,17 @@ export const NavigationBar = () => {
                                             <Icon className="navigation-bar--external-link-icon" as={MdOpenInNew} />
                                             {link.text}
                                         </NavLink>
-                                    ) : (
-                                        <NavLink key={link.text} href={link.link}>
-                                            {link.text}
-                                        </NavLink>
-                                    )
+                                    ) :
+                                        link.isMailto ? (
+                                            <NavLink key={link.text} href={link.link}>
+                                                <Icon className="navigation-bar--external-link-icon" as={MdMailOutline} />
+                                                {link.text}
+                                            </NavLink>
+                                        ) : (
+                                            <NavLink key={link.text} href={link.link}>
+                                                {link.text}
+                                            </NavLink>
+                                        )
                                 ))}
                             </HStack>
                         </Box>
