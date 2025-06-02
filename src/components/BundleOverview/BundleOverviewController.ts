@@ -46,7 +46,7 @@ export class BundleOverviewController {
         });
 
         const unmatchedRepos = repoData.filter((repo: any) =>
-            !topics.some((topic) => repo.topics.includes(topic))
+            !topics.some((topic) => repo.topics.includes(topic.topic))
         );
 
         sortedRepos.push({
