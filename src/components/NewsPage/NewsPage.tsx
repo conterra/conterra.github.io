@@ -1,13 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Button, Card, CardBody, CardFooter, Center, Heading, Spinner, Stack, Text, Image, ButtonGroup } from '@chakra-ui/react'
+import { Card, CardBody, Center, Heading, Spinner, Text } from '@chakra-ui/react'
 import { Octokit } from "@octokit/core";
-import DOMPurify from 'dompurify';
-import parse from 'html-react-parser';
-
-import { MdOpenInNew, MdOutlineExitToApp } from "react-icons/md";
 
 import "./NewsPage.css";
 import { NewsPageController } from './NewsPageController';
+import { NewsCard } from './subcomponents/NewsCard';
 
 export const NewsPage = () => {
     const [gitHubNewsData, setGitHubNewsData] = useState<any[]>([]);
@@ -65,43 +62,13 @@ export const NewsPage = () => {
                                 </CardBody>
                             </Card>
                         </Center>
-                        :
-                        gitHubNewsData.map((release: any, i: any) => (
-                            <div key={`${release.id}-${i}`} className='col-md-4'>
-
-                                <Card
-                                    direction={{ base: 'column', sm: 'row' }}
-                                    overflow='hidden'
-                                    variant='outline'
-                                >
-                                    <Image
-                                        objectFit='cover'
-                                        maxW={{ base: '100%', sm: '400px' }}
-                                        src={`https://raw.githubusercontent.com/conterra/${release.repoTitle}/refs/heads/main/screenshot.JPG`}
-                                        alt='Bundle Screenshot'
-                                    />
-
-                                    <Stack>
-                                        <CardBody>
-                                            <Heading textTransform='capitalize' size="md">{controller.formatRepositoryName(release.repoTitle)}: {release.name} ({controller.getDate(release.published_at)})</Heading>
-                                            <Text>{parse(DOMPurify.sanitize(release.body.replace(/\n/g, '<br />')))}</Text>
-                                        </CardBody>
-                                        <CardFooter>
-                                            <ButtonGroup>
-                                                <Button leftIcon={<MdOpenInNew />} as="a" href={release.html_url} target="_blank" rel="noopener noreferrer">
-                                                    Zum Repository
-                                                </Button>
-                                                {release.homepage && (
-                                                    <Button leftIcon={<MdOutlineExitToApp />} variant='solid' colorScheme='blue' onClick={() => window.open(`${release.homepage}`, '_blank')}>
-                                                        Zur Demo
-                                                    </Button>
-                                                )}
-                                            </ButtonGroup>
-                                        </CardFooter>
-                                    </Stack>
-                                </Card>
-                            </div>
-                        ))
+                        : gitHubNewsData.map(
+                            (release: any, i: any) => (
+                                <div key={`${release.id}-${i}`} className='col-md-4'>
+                                    <NewsCard release={release} controller={controller} />
+                                </div>
+                            )
+                        )
                 }
             </div>
         </>
