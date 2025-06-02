@@ -135,8 +135,8 @@ export const BundleOverview = () => {
                     <Box flex="1" pr={8}>
                         <Box width="100%" mt={6}>
                             {loading ?
-                                <div>
-                                    <Center h="50vh">
+                               <div>
+                                    <Center h="50vh" width="100vw" position="fixed" left={0} top={0} zIndex={2000} bg="rgba(255,255,255,0.7)">
                                         <Spinner
                                             thickness='4px'
                                             speed='0.65s'

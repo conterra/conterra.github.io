@@ -42,10 +42,9 @@ export const NewsPage = () => {
     return (
         <>
             <div className="page-content__container newspage__container">
-                <Heading size='lg' className='repo-overview__topic-section-header'>Neueste Releases</Heading>
                 {loading ?
                     <div>
-                        <Center h="50vh">
+                        <Center h="50vh" width="100vw" position="fixed" left={0} top={0} zIndex={2000} bg="rgba(255,255,255,0.7)">
                             <Spinner
                                 thickness='4px'
                                 speed='0.65s'
@@ -64,13 +63,17 @@ export const NewsPage = () => {
                                 </CardBody>
                             </Card>
                         </Center>
-                        : gitHubNewsData.map(
-                            (release: any, i: any) => (
-                                <div key={`${release.id}-${i}`} className='col-md-4'>
-                                    <NewsCard release={release} controller={controller} />
-                                </div>
-                            )
-                        )
+                        :
+                        <>
+                            <Heading size='lg' className='repo-overview__topic-section-header'>Neueste Releases</Heading>
+                            {gitHubNewsData.map(
+                                (release: any, i: any) => (
+                                    <div key={`${release.id}-${i}`} className='col-md-4'>
+                                        <NewsCard release={release} controller={controller} />
+                                    </div>
+                                )
+                            )}
+                        </>
                 }
             </div>
         </>
