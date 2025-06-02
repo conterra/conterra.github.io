@@ -3,9 +3,10 @@ import { Box, Heading, Text } from '@chakra-ui/react';
 interface MinimapProps {
   sortedRepos: { topic: string, repos: any[] }[];
   scrollToHeading: (topic: string) => void;
+  activeTopic?: string;
 }
 
-export const Minimap = ({ sortedRepos, scrollToHeading }: MinimapProps) => (
+export const Minimap = ({ sortedRepos, scrollToHeading, activeTopic }: MinimapProps) => (
   <Box
     className="repo-overview--sidebar-container"
     position="fixed"
@@ -30,6 +31,7 @@ export const Minimap = ({ sortedRepos, scrollToHeading }: MinimapProps) => (
           cursor="pointer"
           _hover={{ color: '#005587', textDecoration: 'underline' }}
           onClick={() => scrollToHeading(sortedRepo.topic)}
+          className={activeTopic === sortedRepo.topic ? 'minimap-active-topic' : ''}
         >
           {sortedRepo.topic}
         </Text>

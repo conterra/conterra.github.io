@@ -1,4 +1,3 @@
-
 #root .repo-overview__container {
     padding: 20px;
 }
@@ -15,6 +14,15 @@
 
 #root .repo-overview--sidebar-container {
     margin-top: 50px;
+}
+
+#root .minimap-active-topic {
+    background: #e3f2fd;
+    color: #005587 !important;
+    font-weight: bold;
+    border-radius: 4px;
+    padding-left: 6px;
+    padding-right: 6px;
 }
 
 #root .repo-overview__container .chakra-input {
