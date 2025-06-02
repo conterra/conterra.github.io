@@ -1,20 +1,22 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
-    Box, Button, ButtonGroup, Card, CardBody, CardFooter, CardHeader,
-    Center, Flex, Heading, Image, Input, InputGroup,
-    InputLeftElement, SimpleGrid, Spinner, Stack, StackDivider, Text
+    Center, Flex, Heading, SimpleGrid, Spinner, Box, Text,
+    Card,
+    CardBody
 } from '@chakra-ui/react'
 import { Octokit } from "@octokit/core";
-import { useNavigate } from "react-router";
 
 import "./BundleOverview.css";
 import { BundleOverviewController } from './BundleOverviewController';
-
-import { MdSearch, MdOpenInNew, MdOutlineExitToApp } from "react-icons/md";
+import { OverviewCard } from './subcomponents/OverviewCard';
+import { SearchBar } from './subcomponents/SearchBar';
+import { Minimap } from './subcomponents/Minimap';
 
 export const BundleOverview = () => {
-    const myRef = useRef<null | HTMLDivElement>(null);
+    const headingRefs = useRef<{ [topic: string]: HTMLDivElement | null }>({});
 
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const [gitHubRepoData, setGitHubRepoData] = useState<any>(null);
     const [searchItem, setSearchItem] = useState('');
     const [filteredRepos, setFilteredRepos] = useState(gitHubRepoData);
@@ -26,11 +28,29 @@ export const BundleOverview = () => {
     const controller = useMemo(() => new BundleOverviewController(), []);
 
     useEffect(() => {
-        controller.fetchGitHubRepoData(octokit).then((data) => {
-            setGitHubRepoData(data);
-            setFilteredRepos(data);
-            setSortedRepos(controller.sortRepositoriesByTopics(data));
-        });
+        let isMounted = true;
+        setLoading(true);
+        setError(null);
+
+        controller.fetchGitHubRepoData(octokit)
+            .then((data) => {
+                if (isMounted) {
+                    if (data === undefined) {
+                        setError("Fehler beim Laden der Releases.");
+                        setGitHubRepoData([]);
+                        setFilteredRepos([]);
+                        setSortedRepos([]);
+                    } else {
+                        setGitHubRepoData(data);
+                        setFilteredRepos(data);
+                        setSortedRepos(controller.sortRepositoriesByTopics(data));
+                    }
+
+                    setLoading(false);
+                }
+            });
+
+        return () => { isMounted = false; };
     }, [controller, octokit]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,121 +70,69 @@ export const BundleOverview = () => {
 
         setFilteredRepos(filteredItems);
         setSortedRepos(controller.sortRepositoriesByTopics(filteredRepos));
-
-        // octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
-        //     owner: 'conterra',
-        //     repo: 'mapapps-portal-item-loader',
-        //     path: 'screenshot.JPG'
-        // }).then((data) => {
-        //     console.log(data);
-        // });
     };
 
-    const executeScroll = () => {
-        if (myRef.current) {
-            myRef.current.scrollIntoView()
+    const scrollToHeading = (topic: string) => {
+        const ref = headingRefs.current[topic];
+        if (ref) {
+            ref.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-
-    }
+    };
 
     return (
         <>
-            <div className="page-content__container repo-overview__container">
-                <div className="repo-overview--search-bar-container">
-                    <Flex className="repo-overview--search-bar-flex">
-                        <InputGroup className="repo-overview--search-bar-input" position={"fixed"} zIndex={1000}>
-                            <InputLeftElement pointerEvents='none'>
-                                <MdSearch />
-                            </InputLeftElement>
-                            <Input type="text" backgroundColor="white" value={searchItem} onChange={handleInputChange} placeholder="Developer Network Bundles durchsuchen" />
-                        </InputGroup>
-                    </Flex>
-                </div>
+            <div className="page-content__container repo-overview__container" style={{ position: 'relative' }}>
+                <SearchBar searchItem={searchItem} handleInputChange={handleInputChange} />
+                <Minimap sortedRepos={sortedRepos || []} scrollToHeading={scrollToHeading} />
 
-                {/* <Box
-                    borderLeft="1px"
-                    position={"fixed"}
-                    right={0}
-                    h="full"
-                    w="200px"
-                    className="repo-overview--sidebar-container"
-                >
-                    <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-                        <Box>
-                            <Text onClick={() => executeScroll()}>Test 1</Text>
-                            <Text onClick={() => executeScroll()}>Test 2</Text>
-                            <Text onClick={() => executeScroll()}>Test 3</Text>
-                        </Box>
-                    </Flex>
-                </Box> */}
-
-                {sortedRepos ? sortedRepos.map((sortedRepo: { topic: string, repos: any[] }) => (
-                    sortedRepo.repos.length >= 1 && (
-                        <div key={sortedRepo.topic} className='repo-overview__topic-section'>
-                            <Flex direction={'column'}>
-                                <Heading size='lg' className='repo-overview__topic-section-header'>{sortedRepo.topic}</Heading>
-
-                                <SimpleGrid spacing={7} templateColumns='repeat(auto-fill, minmax(300px, 1fr))'>
-                                    {sortedRepo.repos.map((repository: any, i: any) => (
-                                        <div key={`${repository.name}-${i}`} >
-                                            <Card
-                                                direction={'column'}
-                                                overflow='hidden'
-                                                variant='elevated'>
-                                                <Image
-                                                    objectFit='cover'
-                                                    maxW={{ base: '100%', sm: '100%' }}
-                                                    src={`https://raw.githubusercontent.com/conterra/${repository.name}/refs/heads/main/screenshot.JPG`}
-                                                    alt='Bundle Screenshot'
-                                                />
-                                                {/* TODO bilder weg vom rand */}
-                                                <Stack>
-                                                    <CardBody>
-                                                        <Heading textTransform='capitalize' size='sm'>
-                                                            {controller.formatRepositoryName(repository.name)}
-                                                        </Heading>
-                                                        <Text noOfLines={5} pt='2' fontSize='sm'>
-                                                            {repository.description}
-                                                        </Text>
-                                                        <Stack spacing='4'>
-                                                            <Box>
-                                                                <Text pt='2' fontSize='sm'>
-                                                                    Letztes Update vor {controller.getTimeDifferenceFromPush(repository.updated_at)} Tagen, {repository.open_issues_count} offene Issues
-                                                                </Text>
-                                                            </Box>
-                                                        </Stack>
-                                                    </CardBody>
-                                                    <CardFooter>
-                                                        <ButtonGroup>
-                                                            <Button leftIcon={<MdOpenInNew />} variant='solid' onClick={() => window.open(`${repository.svn_url}`, '_blank')}>
-                                                                Zur Detailseite
-                                                            </Button>
-                                                            {repository.homepage && (
-                                                                <Button leftIcon={<MdOutlineExitToApp />} variant='solid' colorScheme='blue' onClick={() => window.open(`${repository.homepage}`, '_blank')}>
-                                                                    Zur Demo
-                                                                </Button>
-                                                            )}
-                                                        </ButtonGroup>
-                                                    </CardFooter>
-                                                </Stack>
-                                            </Card>
-                                        </div>
-                                    ))}
-                                </SimpleGrid>
-                                <div ref={myRef}>Test</div>
-                            </Flex>
-                        </div>
-                    )
-                )) : (
-                    <div>
+                <Box width="100%" mt={6}>
+                    {loading ?
                         <div>
-                            <Center h="full">
-                                <Spinner size={'xl'} />
+                            <Center h="50vh">
+                                <Spinner
+                                    thickness='4px'
+                                    speed='0.65s'
+                                    emptyColor='gray.200'
+                                    color='#005587'
+                                    size='xl'
+                                />
                             </Center>
                         </div>
-                    </div>
-                )}
-
+                        : error ?
+                        <Center h="40vh">
+                            <Card bg="red.50" borderColor="red.300" borderWidth={1} p={6} minW="350px" boxShadow="sm">
+                                <CardBody>
+                                    <Heading size="md" color="red.600" mb={2}>Fehler</Heading>
+                                    <Text color="red.700">{error}</Text>
+                                </CardBody>
+                            </Card>
+                        </Center>
+                        : sortedRepos.map(
+                            (sortedRepo: { topic: string, repos: any[] }) => (
+                                sortedRepo.repos.length >= 1 && (
+                                    <div key={sortedRepo.topic} className='repo-overview__topic-section'>
+                                        <Flex direction={'column'}>
+                                            <Heading
+                                                size='lg'
+                                                className='repo-overview__topic-section-header'
+                                                ref={el => headingRefs.current[sortedRepo.topic] = el}
+                                                style={{ scrollMarginTop: 100 }}
+                                            >
+                                                {sortedRepo.topic}
+                                            </Heading>
+                                            <SimpleGrid spacing={7} templateColumns='repeat(auto-fill, minmax(300px, 1fr))'>
+                                                {sortedRepo.repos.map((repository: any, i: any) => (
+                                                    <div key={`${repository.name}-${i}`} >
+                                                        <OverviewCard repository={repository} controller={controller} />
+                                                    </div>
+                                                ))}
+                                            </SimpleGrid>
+                                        </Flex>
+                                    </div>
+                                )
+                            ))
+                    }
+                </Box>
             </div>
         </>
     );
