@@ -38,8 +38,7 @@ export const NavigationBar = () => {
                         <LinkBox>
                             <Box>
                                 <LinkOverlay href='/news'>
-                                    <Image src='../assets/Logo_con-terra_RGB_600px.png' w="100%" h="32px" >
-                                    </Image>
+                                    <Image src='../assets/Logo_con-terra_RGB_600px.png' w="100%" h="32px" />
                                 </LinkOverlay>
                             </Box>
                         </LinkBox>
