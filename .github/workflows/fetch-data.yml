@@ -41,8 +41,8 @@ jobs:
 
       - name: Copy generated data to gh-pages
         run: |
-          cp main/public/base_data.json gh-pages/data/
-          cp main/public/news_data.json gh-pages/data/
+          cp main/public/data/base_data.json gh-pages/data/
+          cp main/public/data/news_data.json gh-pages/data/
 
       - name: Commit & push changes
         working-directory: ./gh-pages
