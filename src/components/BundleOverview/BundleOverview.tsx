@@ -40,7 +40,7 @@ export const BundleOverview = () => {
         setLoading(true);
         setError(null);
 
-        fetch('/base_data.json')
+        fetch('/data/base_data.json')
             .then(res => res.json())
             .then((data) => {
                 if (isMounted) {

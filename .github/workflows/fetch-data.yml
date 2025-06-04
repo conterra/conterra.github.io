@@ -41,14 +41,14 @@ jobs:
 
       - name: Copy generated data to gh-pages
         run: |
-          cp main/public/base_data.json gh-pages/
-          cp main/public/news_data.json gh-pages/
+          cp main/public/base_data.json gh-pages/data/
+          cp main/public/news_data.json gh-pages/data/
 
       - name: Commit & push changes
         working-directory: ./gh-pages
         run: |
           git config user.name "${{ secrets.TECHNICAL_USER_NAME }}"
           git config user.email "${{ secrets.TECHNICAL_USER_MAIL }}"
-          git add base_data.json news_data.json
+          git add data/base_data.json data/news_data.json
           git diff --quiet && git diff --staged --quiet || git commit -m "Update API data"
           git push origin gh-pages
