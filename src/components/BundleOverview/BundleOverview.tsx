@@ -15,8 +15,6 @@ import {
     Card,
     CardBody
 } from '@chakra-ui/react'
-import { Octokit } from "@octokit/core";
-import { paginateRest } from "@octokit/plugin-paginate-rest";
 
 import "./BundleOverview.css";
 import { BundleOverviewController } from './BundleOverviewController';
@@ -35,10 +33,6 @@ export const BundleOverview = () => {
     const [sortedRepos, setSortedRepos] = useState<any>(null);
     const [activeTopic, setActiveTopic] = useState<string | null>(null);
 
-    const MyOctokit = Octokit.plugin(paginateRest);
-    const octokit = useMemo(() => new MyOctokit({
-        auth: process.env.REACT_APP_GITHUB_TOKEN
-    }), []);
     const controller = useMemo(() => new BundleOverviewController(), []);
 
     useEffect(() => {
@@ -46,10 +40,11 @@ export const BundleOverview = () => {
         setLoading(true);
         setError(null);
 
-        controller.fetchGitHubRepoData(octokit)
+        fetch('/base_data.json')
+            .then(res => res.json())
             .then((data) => {
                 if (isMounted) {
-                    if (data === undefined) {
+                    if (!data) {
                         setError("Fehler beim Laden der Releases.");
                         setGitHubRepoData([]);
                         setFilteredRepos([]);
@@ -59,13 +54,21 @@ export const BundleOverview = () => {
                         setFilteredRepos(data);
                         setSortedRepos(controller.sortRepositoriesByTopics(data));
                     }
-
+                    setLoading(false);
+                }
+            })
+            .catch(() => {
+                if (isMounted) {
+                    setError("Fehler beim Laden der Releases.");
+                    setGitHubRepoData([]);
+                    setFilteredRepos([]);
+                    setSortedRepos([]);
                     setLoading(false);
                 }
             });
 
         return () => { isMounted = false; };
-    }, [controller, octokit]);
+    }, [controller]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const searchTerm = e.target.value;
@@ -95,7 +98,6 @@ export const BundleOverview = () => {
         }
     };
 
-    // Intersection Observer for active topic
     useEffect(() => {
         if (!sortedRepos) return;
         const topics: string[] = sortedRepos.map((sr: { topic: string }) => sr.topic);
@@ -131,11 +133,10 @@ export const BundleOverview = () => {
         <>
             <div className="page-content__container repo-overview__container" style={{ position: 'relative' }}>
                 <Flex direction="row" align="flex-start" width="100%">
-                    {/* Main Content (Left) */}
                     <Box flex="1" pr={8}>
                         <Box width="100%" mt={6}>
                             {loading ?
-                               <div>
+                                <div>
                                     <Center h="50vh" width="100vw" position="fixed" left={0} top={0} zIndex={2000} bg="rgba(255,255,255,0.7)">
                                         <Spinner
                                             thickness='4px'
@@ -183,7 +184,6 @@ export const BundleOverview = () => {
                             }
                         </Box>
                     </Box>
-                    {/* Sidebar (Right) */}
                     <Box minW="320px" maxW="400px" width="28%" className="repo-overview__sidebar">
                         <SearchBar searchItem={searchItem} handleInputChange={handleInputChange} />
                         <Minimap sortedRepos={sortedRepos || []} scrollToHeading={scrollToHeading} activeTopic={activeTopic || undefined} />
