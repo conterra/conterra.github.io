@@ -28,7 +28,7 @@ jobs:
       - name: Fetch API data
         env:
           GITHUB_TOKEN: ${{ secrets.API_KEY }}
-        run: node scripts/fetchData.ts
+        run: node scripts/fetchData.js
         working-directory: ./main
 
       - name: Checkout gh-pages branch
