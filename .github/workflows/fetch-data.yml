@@ -10,10 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout gh-pages branch
+      - name: Checkout main branch
         uses: actions/checkout@v3
         with:
-          ref: gh-pages
+          ref: main
+          path: main
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -22,16 +23,30 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: ./main
 
       - name: Fetch API data
         env:
           GITHUB_TOKEN: ${{ secrets.API_KEY }}
         run: node scripts/fetchData.js
+        working-directory: ./main
+
+      - name: Checkout gh-pages branch
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Copy generated data to gh-pages
+        run: |
+          cp main/public/base_data.json gh-pages/public/
+          cp main/public/news_data.json gh-pages/public/
 
       - name: Commit & push changes
         run: |
-          git config user.name ${{ secrets.TECHNICAL_USER_NAME }}
-          git config user.email ${{ secrets.TECHNICAL_USER_MAIL }}
+          git config user.name "${{ secrets.TECHNICAL_USER_NAME }}"
+          git config user.email "${{ secrets.TECHNICAL_USER_MAIL }}"
+          cd gh-pages
           git add public/base_data.json public/news_data.json
           git diff --quiet && git diff --staged --quiet || git commit -m "Update API data"
           git push origin gh-pages
