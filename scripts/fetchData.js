@@ -22,7 +22,7 @@ async function fetchAndSaveActiveRepos() {
         per_page: 100
     });
 
-    const activeRepoData = gitHubRepoData.filter((repo: any) =>
+    const activeRepoData = gitHubRepoData.filter((repo) =>
         repo.topics.includes('4x') && repo.topics.includes('mapapps') && !repo.archived
     );
 
@@ -30,8 +30,8 @@ async function fetchAndSaveActiveRepos() {
     return activeRepoData;
 }
 
-async function fetchAndSaveReleaseInformation(activeRepos: any[]) {
-    const releasePromises = activeRepos.map(async (repo: any) => {
+async function fetchAndSaveReleaseInformation(activeRepos) {
+    const releasePromises = activeRepos.map(async (repo) => {
         try {
             const { data } = await octokit.request('GET /repos/{owner}/{repo}/releases/latest', {
                 owner: 'conterra',
@@ -47,7 +47,7 @@ async function fetchAndSaveReleaseInformation(activeRepos: any[]) {
     });
 
     const allLatestReleases = (await Promise.all(releasePromises))
-        .filter((item): item is { repo: any; release: any } => !!item && !!item.release?.published_at);
+        .filter(item => !!item && !!item.release?.published_at);
 
     const newsData = allLatestReleases
         .sort((a, b) => new Date(b.release.published_at).getTime() - new Date(a.release.published_at).getTime())
