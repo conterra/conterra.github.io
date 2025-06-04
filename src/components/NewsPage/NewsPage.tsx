@@ -17,7 +17,7 @@ export const NewsPage = () => {
         setLoading(true);
         setError(null);
 
-        fetch('/news_data.json')
+        fetch('/data/news_data.json')
             .then(res => res.json())
             .then((data) => {
                 if (isMounted) {

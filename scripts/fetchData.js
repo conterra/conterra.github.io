@@ -26,7 +26,7 @@ async function fetchAndSaveActiveRepos() {
         repo.topics.includes('4x') && repo.topics.includes('mapapps') && !repo.archived
     );
 
-    fs.writeFileSync('public/base_data.json', JSON.stringify(activeRepoData));
+    fs.writeFileSync('public/data/base_data.json', JSON.stringify(activeRepoData));
     return activeRepoData;
 }
 
@@ -59,5 +59,5 @@ async function fetchAndSaveReleaseInformation(activeRepos) {
             ...release
         }));
 
-    fs.writeFileSync('public/news_data.json', JSON.stringify(newsData));
+    fs.writeFileSync('public/data/news_data.json', JSON.stringify(newsData));
 }
