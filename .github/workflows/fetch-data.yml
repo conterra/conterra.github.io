@@ -1,0 +1,37 @@
+name: Fetch API Data
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  fetch-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout gh_pages branch
+        uses: actions/checkout@v3
+        with:
+          ref: gh_pages
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch API data
+        env:
+          GITHUB_TOKEN: ${{ secrets.API_KEY }}
+        run: node scripts/fetchData.js
+
+      - name: Commit & push changes
+        run: |
+          git config user.name ${{ secrets.TECHNICAL_USER_NAME }}
+          git config user.email ${{ secrets.TECHNICAL_USER_MAIL }}
+          git add public/base_data.json public/news_data.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update API data"
+          git push origin gh_pages
