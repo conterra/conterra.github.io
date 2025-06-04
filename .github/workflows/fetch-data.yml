@@ -43,6 +43,7 @@ jobs:
           cp main/public/news_data.json gh-pages/
 
       - name: Commit & push changes
+        working-directory: ./gh-pages
         run: |
           git config user.name "${{ secrets.TECHNICAL_USER_NAME }}"
           git config user.email "${{ secrets.TECHNICAL_USER_MAIL }}"
