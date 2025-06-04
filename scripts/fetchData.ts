@@ -1,10 +1,12 @@
 import fs from 'fs';
+import dotenv from 'dotenv';
 import { Octokit } from "@octokit/core";
 import { paginateRest } from "@octokit/plugin-paginate-rest";
 
+dotenv.config();
 const MyOctokit = Octokit.plugin(paginateRest);
 const octokit = new MyOctokit({
-    auth: process.env.REACT_APP_GITHUB_TOKEN
+    auth: process.env.GITHUB_TOKEN
 });
 
 (async () => {
