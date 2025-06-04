@@ -1,7 +1,7 @@
-import fs from 'fs';
-import dotenv from 'dotenv';
-import { Octokit } from "@octokit/core";
-import { paginateRest } from "@octokit/plugin-paginate-rest";
+const fs = require('fs');
+const dotenv = require('dotenv');
+const { Octokit } = require("@octokit/core");
+const { paginateRest } = require("@octokit/plugin-paginate-rest");
 
 dotenv.config();
 const MyOctokit = Octokit.plugin(paginateRest);
