@@ -14,7 +14,7 @@ export const OverviewCard = ({ repository, controller }: OverviewCardProps) => (
         <Image
             objectFit='cover'
             maxW={{ base: '100%', sm: '100%' }}
-            src={`https://raw.githubusercontent.com/conterra/${repository.name}/refs/heads/main/screenshot.JPG`}
+            src={`https://raw.githubusercontent.com/conterra/${repository.name}/refs/heads/main/screenshot.png`}
             alt='Bundle Screenshot'
         />
         <Stack>
