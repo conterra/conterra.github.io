@@ -29,7 +29,7 @@ export const OverviewCard = ({ repository, controller }: OverviewCardProps) => (
                     <Box>
                         <Text pt='2' fontSize='sm'>
                             Letztes Update vor {controller.getTimeDifferenceFromPush(repository.updated_at)} {controller.getTimeDifferenceFromPush(repository.updated_at) === 1 ? 'Tag' : 'Tagen'}, 
-                            {repository.open_issues_count} {repository.open_issues_count === 1 ? 'offenes Issue' : 'offene Issues'}
+                            &nbsp;{repository.open_issues_count} {repository.open_issues_count === 1 ? 'offenes Issue' : 'offene Issues'}
                         </Text>
                     </Box>
                 </Stack>
