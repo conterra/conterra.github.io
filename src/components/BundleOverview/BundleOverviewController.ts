@@ -38,7 +38,7 @@ export class BundleOverviewController {
         );
 
         sortedRepos.push({
-            topic: "Weitere Funktionen",
+            topic: "Weitere Bundles",
             repos: unmatchedRepos
         });
 
