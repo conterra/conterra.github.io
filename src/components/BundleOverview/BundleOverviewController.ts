@@ -18,10 +18,19 @@ export class BundleOverviewController {
         const sortedRepos: any = [];
 
         topics.forEach((topic) => {
-            sortedRepos.push({
-                topic: topic.displayValue,
-                repos: repoData.filter((repo: any) => repo.topics.includes(topic.topic))
-            });
+            if (topic.topic === "all") {
+                sortedRepos.push({
+                    topic: topic.displayValue,
+                    repos: repoData.sort((a: any, b: any) => {
+                        return a.name.localeCompare(b.name);
+                    })
+                });
+            } else {
+                sortedRepos.push({
+                    topic: topic.displayValue,
+                    repos: repoData.filter((repo: any) => repo.topics.includes(topic.topic))
+                });
+            }
         });
 
         const unmatchedRepos = repoData.filter((repo: any) =>

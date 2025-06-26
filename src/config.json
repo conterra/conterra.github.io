@@ -3,6 +3,10 @@
         "gitHubRepoTopicList": {
             "topics": [
                 {
+                    "topic": "all",
+                    "displayValue": "Alle Bundles (alphabetisch)"
+                },
+                {
                     "topic": "highlight",
                     "displayValue": "Highlights"
                 },
@@ -36,7 +40,7 @@
     "NavigationBar": {
         "links": [
             {
-                "text": "Über uns",
+                "text": "Info",
                 "link": "/about"
             },
             {
