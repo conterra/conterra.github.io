@@ -10,3 +10,15 @@
 .navigation-bar--container .chakra-linkbox img {
     padding: 6.5px;
 }
+
+.navigation-bar--container .navigation-bar--nav-link-active {
+    background: #005587;
+    color: #e3f2fd;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0, 85, 135, 0.08);
+
+}
+
+.navigation-bar--container .navigation-bar--nav-link-active:hover {
+    color: #1A202C;
+}
