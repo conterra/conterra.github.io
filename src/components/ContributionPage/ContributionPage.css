@@ -1,6 +1,5 @@
 .contribution-page {
   padding: 2rem;
-  max-width: 800px;
   margin: 0 auto;
 }
 
@@ -173,9 +172,9 @@
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  justify-content: space-around;
+  justify-content: flex-start;
   height: 180px;
-  gap: 1.5rem;
+  gap: 0; /* Bars touch each other */
   margin-top: 2rem;
 }
 

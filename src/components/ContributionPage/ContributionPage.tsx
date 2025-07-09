@@ -1,12 +1,42 @@
 import React from "react";
 import "./ContributionPage.css";
+import { Leaderboard } from "./Leaderboard";
 
 /**
  * ContributionPage - Shows information and guidelines for contributing to the project.
  */
 export const ContributionPage = () => {
+  // Dummy leaderboard data
+  const leaderboardData = [
+    [
+      { name: "Alice", value: 120, color: "#005587" },
+      { name: "Bob", value: 100, color: "#2ecc40" },
+      { name: "Charlie", value: 80, color: "#f39c12" },
+      { name: "Diana", value: 60, color: "#e74c3c" },
+      { name: "Eve", value: 40, color: "#eee" },
+    ],
+    [
+      { name: "Frank", value: 110, color: "#005587" },
+      { name: "Grace", value: 90, color: "#2ecc40" },
+      { name: "Heidi", value: 70, color: "#f39c12" },
+      { name: "Ivan", value: 50, color: "#e74c3c" },
+      { name: "Judy", value: 30, color: "#eee" },
+    ],
+    [
+      { name: "Mallory", value: 105, color: "#005587" },
+      { name: "Niaj", value: 85, color: "#2ecc40" },
+      { name: "Olivia", value: 65, color: "#f39c12" },
+      { name: "Peggy", value: 45, color: "#e74c3c" },
+      { name: "Sybil", value: 25, color: "#eee" },
+    ],
+  ];
   return (
     <div className="contribution-page horizontal-layout">
+      <div className="leaderboards-row">
+        <Leaderboard title="Top Contributors" entries={leaderboardData[0]} vertical />
+        <Leaderboard title="Most Issues Closed" entries={leaderboardData[1]} vertical />
+        <Leaderboard title="Most Reviews" entries={leaderboardData[2]} vertical />
+      </div>
       <div className="issues-section">
         <h2>Open GitHub Issues</h2>
         <div className="issue-list">
