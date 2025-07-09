@@ -52,6 +52,10 @@
                 "link": "/overview"
             },
             {
+                "text": "Mitmachen",
+                "link": "/contribution"
+            },
+            {
                 "text": "Kontakt",
                 "link": "mailto:developernetwork@conterra.de",
                 "isMailto": true
