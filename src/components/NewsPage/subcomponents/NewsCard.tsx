@@ -17,7 +17,7 @@ export const NewsCard = ({ release, controller }: NewsCardProps) => (
         <Image
             objectFit='cover'
             maxW={{ base: '100%', sm: '400px' }}
-            src={`https://raw.githubusercontent.com/conterra/${release.repoTitle}/refs/heads/main/screenshot.JPG`}
+            src={`https://raw.githubusercontent.com/conterra/${release.repoTitle}/refs/heads/main/screenshot.png`}
             alt='Bundle Screenshot'
         />
         <Stack>
