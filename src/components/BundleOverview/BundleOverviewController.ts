@@ -19,9 +19,10 @@ export class BundleOverviewController {
 
         topics.forEach((topic) => {
             if (topic.topic === "all") {
+                const filteredrepoData = repoData.filter((item: any) => !config.BundleOverview.alwaysAdditionalRepos.includes(item.name));
                 sortedRepos.push({
                     topic: topic.displayValue,
-                    repos: repoData.sort((a: any, b: any) => {
+                    repos: filteredrepoData.sort((a: any, b: any) => {
                         return a.name.localeCompare(b.name);
                     })
                 });
