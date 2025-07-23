@@ -14,7 +14,9 @@ export const OverviewCard = ({ repository, controller }: OverviewCardProps) => {
         <Card
             direction={'column'}
             overflow='hidden'
-            variant='elevated'>
+            variant='elevated'
+            display='flex'
+            height='100%'>
             <Image
                 objectFit='cover'
                 maxW={{ base: '100%', sm: '100%' }}
@@ -41,24 +43,22 @@ export const OverviewCard = ({ repository, controller }: OverviewCardProps) => {
                     </ModalBody>
                 </ModalContent>
             </Modal>
-            <Stack>
-                <CardBody>
+            <Stack flex='1' justify='space-between'>
+                <CardBody flex='1'>
                     <Heading textTransform='capitalize' size='sm'>
                         {controller.formatRepositoryName(repository.name)}
                     </Heading>
                     <Text noOfLines={5} pt='2' fontSize='sm'>
                         {repository.description}
                     </Text>
-                    <Stack spacing='4'>
-                        <Box>
-                            <Text pt='2' fontSize='sm'>
-                                Letztes Update vor {controller.getTimeDifferenceFromPush(repository.updated_at)} {controller.getTimeDifferenceFromPush(repository.updated_at) === 1 ? 'Tag' : 'Tagen'}, 
-                                &nbsp;{repository.open_issues_count} {repository.open_issues_count === 1 ? 'offenes Issue' : 'offene Issues'}
-                            </Text>
-                        </Box>
-                    </Stack>
                 </CardBody>
-                <CardFooter>
+                <Box px={6} pb={0}>
+                    <Text fontSize='sm'>
+                        Letztes Update {controller.getTimeDifferenceFromPush(repository.updated_at) === 0 ? 'heute' : `vor ${controller.getTimeDifferenceFromPush(repository.updated_at)} ${controller.getTimeDifferenceFromPush(repository.updated_at) === 1 ? 'Tag' : 'Tagen'}`}, 
+                        &nbsp;{repository.open_issues_count} {repository.open_issues_count === 1 ? 'offenes Issue' : 'offene Issues'}
+                    </Text>
+                </Box>
+                <CardFooter mt='auto'>
                     <ButtonGroup>
                         <Button leftIcon={<MdOpenInNew />} variant='solid' onClick={() => window.open(`${repository.svn_url}`, '_blank')}>
                             Zur Detailseite
