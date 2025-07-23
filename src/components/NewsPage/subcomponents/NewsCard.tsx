@@ -17,7 +17,7 @@ export const NewsCard = ({ release, controller }: NewsCardProps) => {
             direction='column'
             overflow='hidden'
             variant='outline'
-            borderColor={isMajorRelease ? 'blue.500' : undefined}
+            borderColor={isMajorRelease ? 'yellow.500' : undefined}
             borderWidth={isMajorRelease ? '4px' : undefined}
             boxShadow={isMajorRelease ? 'lg' : undefined}
             display='flex'
