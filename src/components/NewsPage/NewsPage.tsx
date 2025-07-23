@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Card, CardBody, Center, Heading, Spinner, Text } from '@chakra-ui/react'
+import { Card, CardBody, Center, Heading, Spinner, Text, SimpleGrid, Box } from '@chakra-ui/react'
 
 import "./NewsPage.css";
 import { NewsPageController } from './NewsPageController';
@@ -37,39 +37,41 @@ export const NewsPage = () => {
     return (
         <>
             <div className="page-content__container newspage__container">
-                {loading ?
-                    <div>
-                        <Center h="50vh" width="100vw" position="fixed" left={0} top={0} zIndex={2000} bg="rgba(255,255,255,0.7)">
-                            <Spinner
-                                thickness='4px'
-                                speed='0.65s'
-                                emptyColor='gray.200'
-                                color='#005587'
-                                size='xl'
-                            />
-                        </Center>
-                    </div>
-                    : error ?
-                        <Center h="40vh">
-                            <Card bg="red.50" borderColor="red.300" borderWidth={1} p={6} minW="350px" boxShadow="sm">
-                                <CardBody>
-                                    <Heading size="md" color="red.600" mb={2}>Fehler</Heading>
-                                    <Text color="red.700">{error}</Text>
-                                </CardBody>
-                            </Card>
-                        </Center>
-                        :
-                        <>
-                            <Heading size='lg' className='repo-overview__topic-section-header'>Neueste Releases</Heading>
-                            {gitHubNewsData.map(
-                                (release: any, i: any) => (
-                                    <div key={`${release.id}-${i}`} className='col-md-4'>
-                                        <NewsCard release={release} controller={controller} />
-                                    </div>
-                                )
-                            )}
-                        </>
-                }
+                <Box width="100%" mt={6}>
+                    {loading ?
+                        <div>
+                            <Center h="50vh" width="100vw" position="fixed" left={0} top={0} zIndex={2000} bg="rgba(255,255,255,0.7)">
+                                <Spinner
+                                    thickness='4px'
+                                    speed='0.65s'
+                                    emptyColor='gray.200'
+                                    color='#005587'
+                                    size='xl'
+                                />
+                            </Center>
+                        </div>
+                        : error ?
+                            <Center h="40vh">
+                                <Card bg="red.50" borderColor="red.300" borderWidth={1} p={6} minW="350px" boxShadow="sm">
+                                    <CardBody>
+                                        <Heading size="md" color="red.600" mb={2}>Fehler</Heading>
+                                        <Text color="red.700">{error}</Text>
+                                    </CardBody>
+                                </Card>
+                            </Center>
+                            :
+                            <>
+                                <Heading size='lg' className='repo-overview__topic-section-header' mb={6}>Neueste Releases</Heading>
+                                <SimpleGrid spacing={7} templateColumns='repeat(auto-fill, minmax(300px, 1fr))'>
+                                    {gitHubNewsData.map(
+                                        (release: any, i: any) => (
+                                            <NewsCard key={`${release.id}-${i}`} release={release} controller={controller} />
+                                        )
+                                    )}
+                                </SimpleGrid>
+                            </>
+                    }
+                </Box>
             </div>
         </>
     );
