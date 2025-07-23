@@ -1,5 +1,11 @@
 {
     "BundleOverview": {
+        "alwaysAdditionalRepos": [
+            "mapapps-custom-nls",
+            "mapapps-devnet-blueprint",
+            "mapapps-typescript-sample",
+            "mapapps-vue-color"
+        ],
         "gitHubRepoTopicList": {
             "topics": [
                 {
