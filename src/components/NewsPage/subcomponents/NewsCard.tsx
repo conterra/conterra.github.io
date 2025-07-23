@@ -14,21 +14,23 @@ export const NewsCard = ({ release, controller }: NewsCardProps) => {
     
     return (
         <Card
-            direction={{ base: 'column', sm: 'row' }}
+            direction='column'
             overflow='hidden'
             variant='outline'
             borderColor={isMajorRelease ? 'blue.500' : undefined}
             borderWidth={isMajorRelease ? '4px' : undefined}
             boxShadow={isMajorRelease ? 'lg' : undefined}
+            display='flex'
+            height='100%'
         >
         <Image
             objectFit='cover'
-            maxW={{ base: '100%', sm: '400px' }}
+            maxW='100%'
             src={`https://raw.githubusercontent.com/conterra/${release.repoTitle}/refs/heads/main/screenshot.png`}
             alt='Bundle Screenshot'
         />
-        <Stack>
-            <CardBody>
+        <Stack flex='1' justify='space-between'>
+            <CardBody flex='1'>
                 <Heading textTransform='capitalize' size="md" pb={3}>
                     {controller.formatRepositoryName(release.repoTitle)}: {release.name} ({controller.getDate(release.published_at)})
                 </Heading>
@@ -49,7 +51,7 @@ export const NewsCard = ({ release, controller }: NewsCardProps) => {
                     {release?.body || ''}
                 </ReactMarkdown>
             </CardBody>
-            <CardFooter>
+            <CardFooter mt='auto'>
                 <ButtonGroup>
                     <Button leftIcon={<MdOpenInNew />} as="a" href={release.html_url} target="_blank" rel="noopener noreferrer">
                         Zur Detailseite

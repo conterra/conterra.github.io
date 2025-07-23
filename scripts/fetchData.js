@@ -51,7 +51,7 @@ async function fetchAndSaveReleaseInformation(activeRepos) {
 
     const newsData = allLatestReleases
         .sort((a, b) => new Date(b.release.published_at).getTime() - new Date(a.release.published_at).getTime())
-        .slice(0, 5)
+        .slice(0, 10)
         .map(({ repo, release }) => ({
             repoTitle: repo.name,
             homepage: repo.homepage,
