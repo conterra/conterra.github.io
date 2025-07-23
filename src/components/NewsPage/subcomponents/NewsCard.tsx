@@ -1,7 +1,8 @@
 import { Card, CardBody, CardFooter, Image, Stack, Heading, Text, ButtonGroup, Button } from '@chakra-ui/react';
 import { MdOpenInNew, MdOutlineExitToApp } from "react-icons/md";
-import DOMPurify from 'dompurify';
-import parse from 'html-react-parser';
+import ReactMarkdown from 'react-markdown';
+import remarkBreaks from 'remark-breaks';
+import remarkGfm from 'remark-gfm';
 
 interface NewsCardProps {
     release: any;
@@ -28,10 +29,25 @@ export const NewsCard = ({ release, controller }: NewsCardProps) => {
         />
         <Stack>
             <CardBody>
-                <Heading textTransform='capitalize' size="md">
+                <Heading textTransform='capitalize' size="md" pb={3}>
                     {controller.formatRepositoryName(release.repoTitle)}: {release.name} ({controller.getDate(release.published_at)})
                 </Heading>
-                <Text>{parse(DOMPurify.sanitize(release?.body?.replace(/\n/g, '<br />')))}</Text>
+                <ReactMarkdown 
+                    remarkPlugins={[remarkBreaks, remarkGfm]}
+                    components={{
+                        p: ({ children }) => <Text mb={2}>{children}</Text>,
+                        h1: ({ children }) => <Heading as="h1" size="lg" mb={2}>{children}</Heading>,
+                        h2: ({ children }) => <Heading as="h2" size="md" mb={2}>{children}</Heading>,
+                        h3: ({ children }) => <Heading as="h3" size="sm" mb={1}>{children}</Heading>,
+                        ul: ({ children }) => <Text as="ul" pl={4} mb={2}>{children}</Text>,
+                        ol: ({ children }) => <Text as="ol" pl={4} mb={2}>{children}</Text>,
+                        li: ({ children }) => <Text as="li" mb={1}>{children}</Text>,
+                        code: ({ children }) => <Text as="code" bg="gray.100" px={1} borderRadius="sm" fontFamily="mono">{children}</Text>,
+                        pre: ({ children }) => <Text as="pre" bg="gray.100" p={3} borderRadius="md" overflow="auto" fontFamily="mono" mb={2}>{children}</Text>,
+                    }}
+                >
+                    {release?.body || ''}
+                </ReactMarkdown>
             </CardBody>
             <CardFooter>
                 <ButtonGroup>
