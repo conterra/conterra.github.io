@@ -8,12 +8,18 @@ interface NewsCardProps {
     controller: any;
 }
 
-export const NewsCard = ({ release, controller }: NewsCardProps) => (
-    <Card
-        direction={{ base: 'column', sm: 'row' }}
-        overflow='hidden'
-        variant='outline'
-    >
+export const NewsCard = ({ release, controller }: NewsCardProps) => {
+    const isMajorRelease = /^v?\d+\.0\.0$/i.test(release.name);
+    
+    return (
+        <Card
+            direction={{ base: 'column', sm: 'row' }}
+            overflow='hidden'
+            variant='outline'
+            borderColor={isMajorRelease ? 'blue.500' : undefined}
+            borderWidth={isMajorRelease ? '4px' : undefined}
+            boxShadow={isMajorRelease ? 'lg' : undefined}
+        >
         <Image
             objectFit='cover'
             maxW={{ base: '100%', sm: '400px' }}
@@ -41,4 +47,5 @@ export const NewsCard = ({ release, controller }: NewsCardProps) => (
             </CardFooter>
         </Stack>
     </Card>
-);
+    );
+};
