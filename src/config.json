@@ -72,5 +72,152 @@
                 "isExternal": true
             }
         ]
+    },
+    "leaderboardData": [
+        [
+            {
+                "name": "Alice",
+                "value": 120,
+                "color": "#005587"
+            },
+            {
+                "name": "Bob",
+                "value": 100,
+                "color": "#2ecc40"
+            },
+            {
+                "name": "Charlie",
+                "value": 80,
+                "color": "#f39c12"
+            },
+            {
+                "name": "Diana",
+                "value": 60,
+                "color": "#e74c3c"
+            },
+            {
+                "name": "Eve",
+                "value": 40,
+                "color": "#eee"
+            }
+        ],
+        [
+            {
+                "name": "Frank",
+                "value": 110,
+                "color": "#005587"
+            },
+            {
+                "name": "Grace",
+                "value": 90,
+                "color": "#2ecc40"
+            },
+            {
+                "name": "Heidi",
+                "value": 70,
+                "color": "#f39c12"
+            },
+            {
+                "name": "Ivan",
+                "value": 50,
+                "color": "#e74c3c"
+            },
+            {
+                "name": "Judy",
+                "value": 30,
+                "color": "#eee"
+            }
+        ],
+        [
+            {
+                "name": "Mallory",
+                "value": 105,
+                "color": "#005587"
+            },
+            {
+                "name": "Niaj",
+                "value": 85,
+                "color": "#2ecc40"
+            },
+            {
+                "name": "Olivia",
+                "value": 65,
+                "color": "#f39c12"
+            },
+            {
+                "name": "Peggy",
+                "value": 45,
+                "color": "#e74c3c"
+            },
+            {
+                "name": "Sybil",
+                "value": 25,
+                "color": "#eee"
+            }
+        ]
+    ],
+    "issuesData": [
+    {
+      "id": 1,
+      "title": "Add dark mode support",
+      "description": "Implement a dark mode toggle for the application UI.",
+      "date": "2025-07-01",
+      "issueId": "#300",
+      "contributors": [
+        {
+          "name": "Alice",
+          "value": 30,
+          "color": "#005587"
+        },
+        {
+          "name": "Bob",
+          "value": 70,
+          "color": "#2ecc40"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Improve mobile responsiveness",
+      "description": "Fix layout issues on mobile devices.",
+      "date": "2025-06-28",
+      "issueId": "#301",
+      "contributors": [
+        {
+          "name": "Charlie",
+          "value": 50,
+          "color": "#005587"
+        },
+        {
+          "name": "Diana",
+          "value": 30,
+          "color": "#2ecc40"
+        },
+        {
+          "name": "Eve",
+          "value": 20,
+          "color": "#eee"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Add contribution guidelines",
+      "description": "Create a CONTRIBUTING.md file with clear steps.",
+      "date": "2025-06-20",
+      "issueId": "#302",
+      "contributors": [
+        {
+          "name": "Frank",
+          "value": 40,
+          "color": "#005587"
+        },
+        {
+          "name": "Grace",
+          "value": 60,
+          "color": "#2ecc40"
+        }
+      ]
     }
+  ]
 }
