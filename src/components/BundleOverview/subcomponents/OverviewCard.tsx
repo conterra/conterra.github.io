@@ -30,13 +30,13 @@ export const OverviewCard = ({ repository, controller }: OverviewCardProps) => {
                 <ModalContent bg='transparent' boxShadow='none' onClick={(e) => e.stopPropagation()}>
                     <ModalCloseButton color='white' zIndex={2} />
                     <ModalBody p={0} display='flex' alignItems='center' justifyContent='center' onClick={() => setIsOpen(false)}>
-                        <Image 
-                            src={imageUrl} 
-                            alt='Bundle Screenshot' 
-                            maxH='90vh' 
-                            maxW='90vw' 
-                            objectFit='contain' 
-                            boxShadow='xl' 
+                        <Image
+                            src={imageUrl}
+                            alt='Bundle Screenshot'
+                            maxH='90vh'
+                            maxW='90vw'
+                            objectFit='contain'
+                            boxShadow='xl'
                             borderRadius='md'
                             onClick={(e) => e.stopPropagation()}
                         />
@@ -54,7 +54,7 @@ export const OverviewCard = ({ repository, controller }: OverviewCardProps) => {
                 </CardBody>
                 <Box px={6} pb={0}>
                     <Text fontSize='sm'>
-                        Letztes Update {controller.getTimeDifferenceFromPush(repository.updated_at) === 0 ? 'heute' : `vor ${controller.getTimeDifferenceFromPush(repository.updated_at)} ${controller.getTimeDifferenceFromPush(repository.updated_at) === 1 ? 'Tag' : 'Tagen'}`}, 
+                        Letztes Update {controller.getTimeDifferenceFromPush(repository.updated_at) === 0 ? 'heute' : `vor ${controller.getTimeDifferenceFromPush(repository.updated_at)} ${controller.getTimeDifferenceFromPush(repository.updated_at) === 1 ? 'Tag' : 'Tagen'}`},
                         &nbsp;{repository.open_issues_count} {repository.open_issues_count === 1 ? 'offenes Issue' : 'offene Issues'}
                     </Text>
                 </Box>

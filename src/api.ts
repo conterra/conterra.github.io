@@ -127,3 +127,22 @@ export interface LinkProps {
     leftIcon?: ReactNode;
     className?: string;
 }
+
+export interface Issue {
+    id: string | number;
+    title: string;
+    description: string;
+    creationDate: string;
+    estimatedExpenses: number;
+    contact: string;
+    state: string;
+    link: string;
+    contributors: Contributor[];
+}
+
+export interface Contributor {
+    id?: string | number;
+    name: string;
+    value: number;
+    color: string;
+}
