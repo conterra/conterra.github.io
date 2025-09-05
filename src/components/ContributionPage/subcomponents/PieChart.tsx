@@ -52,10 +52,10 @@ export function PieChart({ data, colors, size = 64 }: { data: number[]; colors: 
     }
 
     return (
-        <svg width= { size } height = { size } viewBox = {`0 0 ${size} ${size}`
-}>
-    <circle r={ radius } cx = { center } cy = { center } fill = "#eee" />
-        <g dangerouslySetInnerHTML={ { __html: paths } } />
-            </svg>
-  );
+        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`
+        }>
+            <circle r={radius} cx={center} cy={center} fill="#eee" />
+            <g dangerouslySetInnerHTML={{ __html: paths }} />
+        </svg>
+    );
 }
