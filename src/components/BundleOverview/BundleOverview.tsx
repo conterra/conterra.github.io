@@ -132,9 +132,29 @@ export const BundleOverview = () => {
     return (
         <>
             <div className="page-content__container repo-overview__container" style={{ position: 'relative' }}>
-                <Flex direction="row" align="flex-start" width="100%">
-                    <Box flex="1" pr={8}>
-                        <Box width="100%" mt={6}>
+                <Flex direction={{ base: "column", lg: "row" }} align="flex-start" width="100%">
+                    {/* Sidebar - appears first on mobile, second on desktop */}
+                    <Box
+                        minW={{ base: "100%", lg: "320px" }}
+                        maxW={{ base: "100%", lg: "400px" }}
+                        width={{ base: "100%", lg: "28%" }}
+                        className="repo-overview__sidebar"
+                        order={{ base: 1, lg: 2 }}
+                        mb={{ base: 0, lg: 0 }}
+                        pl={{ base: 0, lg: 8 }}
+                        pr={{ base: 6, lg: 0 }}
+                        position={{ base: "relative", lg: "sticky" }}
+                        top={{ base: "10px", lg: "80px" }}
+                        alignSelf="flex-start"
+                        height={{ base: "auto", lg: "fit-content" }}
+                    >
+                        <SearchBar searchItem={searchItem} handleInputChange={handleInputChange} />
+                        <Minimap sortedRepos={sortedRepos || []} scrollToHeading={scrollToHeading} activeTopic={activeTopic || undefined} />
+                    </Box>
+
+                    {/* Main content - appears second on mobile, first on desktop */}
+                    <Box flex="1" pr={{ base: 0, lg: 8 }} order={{ base: 2, lg: 1 }}>
+                        <Box width="100%" mt={3}>
                             {loading ?
                                 <div>
                                     <Center h="50vh" width="100vw" position="fixed" left={0} top={0} zIndex={2000} bg="rgba(255,255,255,0.7)">
@@ -164,7 +184,7 @@ export const BundleOverview = () => {
                                                         <Heading
                                                             size='lg'
                                                             className='repo-overview__topic-section-header'
-                                                            ref={el => headingRefs.current[sortedRepo.topic] = el}
+                                                            ref={el => { headingRefs.current[sortedRepo.topic] = el; }}
                                                             data-topic={sortedRepo.topic}
                                                             style={{ scrollMarginTop: 100 }}
                                                         >
@@ -183,10 +203,6 @@ export const BundleOverview = () => {
                                         ))
                             }
                         </Box>
-                    </Box>
-                    <Box minW="320px" maxW="400px" width="28%" className="repo-overview__sidebar">
-                        <SearchBar searchItem={searchItem} handleInputChange={handleInputChange} />
-                        <Minimap sortedRepos={sortedRepos || []} scrollToHeading={scrollToHeading} activeTopic={activeTopic || undefined} />
                     </Box>
                 </Flex>
             </div>
