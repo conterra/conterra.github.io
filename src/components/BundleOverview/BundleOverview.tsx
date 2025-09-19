@@ -13,8 +13,12 @@ import {
     Box,
     Text,
     Card,
-    CardBody
+    CardBody,
+    Button,
+    Collapse,
+    useDisclosure
 } from '@chakra-ui/react'
+import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
 
 import "./BundleOverview.css";
 import { BundleOverviewController } from './BundleOverviewController';
@@ -24,6 +28,7 @@ import { Minimap } from './subcomponents/Minimap';
 
 export const BundleOverview = () => {
     const headingRefs = useRef<{ [topic: string]: HTMLDivElement | null }>({});
+    const { isOpen, onToggle } = useDisclosure();
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -149,7 +154,29 @@ export const BundleOverview = () => {
                         height={{ base: "auto", lg: "fit-content" }}
                     >
                         <SearchBar searchItem={searchItem} handleInputChange={handleInputChange} />
-                        <Minimap sortedRepos={sortedRepos || []} scrollToHeading={scrollToHeading} activeTopic={activeTopic || undefined} />
+                        
+                        {/* Mobile Collapsible Minimap */}
+                        <Box display={{ base: 'block', lg: 'none' }}>
+                            <Button
+                                onClick={onToggle}
+                                variant="outline"
+                                size="sm"
+                                width="100%"
+                                mb={2}
+                                rightIcon={isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                                justifyContent="space-between"
+                            >
+                                Navigation
+                            </Button>
+                            <Collapse in={isOpen} animateOpacity>
+                                <Minimap sortedRepos={sortedRepos || []} scrollToHeading={scrollToHeading} activeTopic={activeTopic || undefined} />
+                            </Collapse>
+                        </Box>
+                        
+                        {/* Desktop Always Visible Minimap */}
+                        <Box display={{ base: 'none', lg: 'block' }}>
+                            <Minimap sortedRepos={sortedRepos || []} scrollToHeading={scrollToHeading} activeTopic={activeTopic || undefined} />
+                        </Box>
                     </Box>
 
                     {/* Main content - appears second on mobile, first on desktop */}
