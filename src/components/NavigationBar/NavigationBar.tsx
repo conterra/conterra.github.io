@@ -69,44 +69,16 @@ export const NavigationBar = () => {
             <Flex>
                 <Box bg={useColorModeValue('gray.1', 'gray.900')} px={4} as="header" position="fixed" w="100%" zIndex="200" backgroundColor="white" borderBottom="2px solid #005587">
                     <Flex h={16} alignItems={'center'} justifyContent={'center'} position="relative">
-                        <LinkBox position="absolute" left={0} top={0} bottom={0} display={{ base: 'none', md: 'flex' }} alignItems="center">
+                        <LinkBox position="absolute" left={0} top={0} bottom={0} display="flex" alignItems="center">
                             <Box>
                                 <LinkOverlay as={RouterLink} to="/news">
-                                    <Image src='../assets/Logo_con-terra_RGB_600px.png' w="100%" h="32px"/>
+                                    <Image src='../assets/Logo_con-terra_RGB_600px.png' w="100%" h={{ base: "10px", md: "32px" }} mt={{ base: "5px", md: "0" }}/>
                                 </LinkOverlay>
                             </Box>
                         </LinkBox>
-                        <p style={{ fontWeight: 500, fontSize: "x-large", textAlign: "center" }}>con terra Community</p>
-                        <Box position="absolute" right={0} top={0} bottom={0} display="flex" alignItems="center">
-
-                            <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
-                                {config.NavigationBar.links.map((link: any) => {
-                                    let isActive = false;
-                                    if (!link.isExternal && !link.isMailto && link.link) {
-                                        isActive = location.pathname === link.link;
-                                    }
-                                    return (
-                                        link.isExternal ? (
-                                            <NavLink key={link.text} href={link.link} target="_blank" isActive={isActive}>
-                                                <Icon mr="5px" as={MdOpenInNew} />
-                                                {link.text}
-                                            </NavLink>
-                                        ) :
-                                            link.isMailto ? (
-                                                <NavLink key={link.text} href={link.link} isActive={isActive}>
-                                                    <Icon mr="5px" as={MdMailOutline} />
-                                                    {link.text}
-                                                </NavLink>
-                                            ) : (
-                                                <NavLink key={link.text} href={link.link} isActive={isActive}>
-                                                    {link.text}
-                                                </NavLink>
-                                            )
-                                    );
-                                })}
-                            </HStack>
-                            
-                            <Box display={{ base: 'block', md: 'none' }}>
+                        <p style={{ fontWeight: 500, fontSize: "x-large", textAlign: "center" }}>Community</p>
+                        <Box position="absolute" right={0} top={0} bottom={0} display="flex" alignItems="center">                            
+                            <Box display="block">
                                 <Popover placement="bottom-end">
                                     <PopoverTrigger>
                                         <IconButton
