@@ -5,9 +5,9 @@ export const AboutPage = () => {
     return (
         <Box className="page-content__container" maxW="800px" mx="auto" py={10} px={6} bg="white" borderRadius="lg" >
             <VStack align="start" spacing={6}>
-                <Heading size="md" color="#005587">Was sind die Developer Network Bundles?</Heading>
+                <Heading size="md" color="#005587">Was sind die con terra community map.apps Bundles?</Heading>
                 <Text>
-                    Die <b>Developer Network Bundles</b> sind eine Sammlung modularer Erweiterungen für die Plattform <b>map.apps</b>&nbsp;
+                    Die <b>con terra community map.apps Bundles</b> sind eine Sammlung modularer Erweiterungen für die Plattform <b>map.apps</b>&nbsp;
                     der con terra, die Entwickler:innen und Anwender:innen helfen, GIS-Anwendungen effizienter zu gestalten und individuell anzupassen.<br />
                     Sie dienen dazu, den Funktionsumfang von Anwendungen zu erweitern oder bestimmte Aufgaben zu vereinfachen.
                     Die Bundles sind modular aufgebaut, was eine flexible Kombination und Wiederverwendung ermöglicht.<br />
@@ -40,11 +40,11 @@ export const AboutPage = () => {
                 <Text>
                     Für Entwickler:innen bietet das Projekt <Link href="https://github.com/conterra/mapapps-4-developers" color="#005587" isExternal ml={1} textDecoration="underline">mapapps-4-developers</Link> einen Einstiegspunkt zum Erstellen eigener Bundles und Themes.
                     Dort finden Sie einige Beispiele für gängige Aufgaben.<br />
-                    Gerne können Sie sich auch über Issues und mit Ideen beteiligen. Nutzen Sie dazu das GitHub Issue Feature oder treten Sie per<Link href="mailto:developernetwork@conterra.de" color="#005587" isExternal ml={1} textDecoration="underline">Mail</Link> mit uns in Kontakt.
+                    Gerne können Sie sich auch über Issues und mit Ideen beteiligen. Nutzen Sie dazu das GitHub Issue Feature oder treten Sie per<Link href="mailto:s.holtkamp@conterra.de" color="#005587" isExternal ml={1} textDecoration="underline">Mail</Link> mit uns in Kontakt.
                 </Text>
                 <Box bg="gray.50" borderRadius="md" p={4} w="100%">
                     <InfoIcon color="#005587" mr={2} />
-                    Da die Developer Network Bundles durch die Community entwickelt werden, besteht bei Fehlern kein Anspruch auf Standard-Support. Wir unterstützen Sie jedoch gerne bei der Nutzung und Integration der Bundles in Ihre Anwendungen. <br />
+                    Da die con terra community map.apps Bundles durch die Community entwickelt werden, besteht bei Fehlern kein Anspruch auf Standard-Support. Wir unterstützen Sie jedoch gerne bei der Nutzung und Integration der Bundles in Ihre Anwendungen. <br />
                 </Box>
             </VStack>
         </Box>
