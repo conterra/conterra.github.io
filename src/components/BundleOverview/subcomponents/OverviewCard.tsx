@@ -1,4 +1,4 @@
-import { Card, CardBody, CardFooter, Image, Stack, Heading, Text, ButtonGroup, Button, Box, Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton } from '@chakra-ui/react';
+import { Card, CardBody, CardFooter, Image, Stack, Heading, Text, ButtonGroup, Button, Box, Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton, useTheme } from '@chakra-ui/react';
 import { MdOpenInNew, MdOutlineExitToApp } from "react-icons/md";
 import { useState } from 'react';
 
@@ -6,6 +6,7 @@ interface OverviewCardProps {
     repository: any;
     controller: any;
 }
+
 
 export const OverviewCard = ({ repository, controller }: OverviewCardProps) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -16,7 +17,10 @@ export const OverviewCard = ({ repository, controller }: OverviewCardProps) => {
             overflow='hidden'
             variant='elevated'
             display='flex'
-            height='100%'>
+            height='100%'
+            border="2px solid rgba(0, 0, 0, 0.1)"
+            boxShadow="5px 5px 5px rgba(0, 0, 0, 0.1)"
+        >
             <Image
                 objectFit='cover'
                 maxW={{ base: '100%', sm: '100%' }}
@@ -24,6 +28,8 @@ export const OverviewCard = ({ repository, controller }: OverviewCardProps) => {
                 alt='Bundle Screenshot'
                 cursor='pointer'
                 onClick={() => setIsOpen(true)}
+                px={1.25}
+                pt={1.25}
             />
             <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} size='full' isCentered closeOnOverlayClick={true}>
                 <ModalOverlay onClick={() => setIsOpen(false)} />
@@ -64,7 +70,7 @@ export const OverviewCard = ({ repository, controller }: OverviewCardProps) => {
                             Zur Detailseite
                         </Button>
                         {repository.homepage && (
-                            <Button leftIcon={<MdOutlineExitToApp />} variant='solid' colorScheme='blue' onClick={() => window.open(`${repository.homepage}`, '_blank')}>
+                            <Button leftIcon={<MdOutlineExitToApp />} variant='solid' colorScheme='primary' onClick={() => window.open(`${repository.homepage}`, '_blank')}>
                                 Zur Demo
                             </Button>
                         )}

@@ -21,7 +21,6 @@ import {
 } from '@chakra-ui/react'
 import { ChevronDownIcon, ChevronUpIcon, ChevronUpIcon as ArrowUpIcon } from '@chakra-ui/icons'
 
-import "./BundleOverview.css";
 import { BundleOverviewController } from './BundleOverviewController';
 import { OverviewCard } from './subcomponents/OverviewCard';
 import { SearchBar } from './subcomponents/SearchBar';
@@ -39,56 +38,54 @@ const LoadingSpinner = () => (
     </Center>
 );
 
-const RepoSection = ({ 
-    sortedRepo, 
-    headingRefs, 
-    controller 
-}: { 
-    sortedRepo: { topic: string, repos: any[] }, 
+const RepoSection = ({
+    sortedRepo,
+    headingRefs,
+    controller
+}: {
+    sortedRepo: { topic: string, repos: any[] },
     headingRefs: React.MutableRefObject<{ [topic: string]: HTMLDivElement | null }>,
-    controller: BundleOverviewController 
+    controller: BundleOverviewController
 }) => {
     if (sortedRepo.repos.length < 1) return null;
-    
+
     return (
-        <div key={sortedRepo.topic} className='repo-overview__topic-section'>
-            <Flex direction={'column'}>
-                <Heading
-                    size='lg' mb={6} mt={6}
-                    ref={el => { headingRefs.current[sortedRepo.topic] = el; }}
-                    data-topic={sortedRepo.topic}
-                    style={{ scrollMarginTop: 100 }}
-                >
-                    {sortedRepo.topic}
-                </Heading>
-                <SimpleGrid spacing={7} templateColumns='repeat(auto-fill, minmax(300px, 1fr))'>
-                    {sortedRepo.repos.map((repository: any, i: any) => (
-                        <div key={`${repository.name}-${i}`} >
-                            <OverviewCard repository={repository} controller={controller} />
-                        </div>
-                    ))}
-                </SimpleGrid>
-            </Flex>
-        </div>
+        <Flex direction={'column'}>
+            <Heading
+                size='lg' mb={6} mt={6}
+                ref={el => { headingRefs.current[sortedRepo.topic] = el; }}
+                data-topic={sortedRepo.topic}
+                style={{ scrollMarginTop: 100 }}
+            >
+                {sortedRepo.topic}
+            </Heading>
+            <SimpleGrid spacing={7} templateColumns='repeat(auto-fill, minmax(300px, 1fr))'>
+                {sortedRepo.repos.map((repository: any, i: any) => (
+                    <div key={`${repository.name}-${i}`} >
+                        <OverviewCard repository={repository} controller={controller} />
+                    </div>
+                ))}
+            </SimpleGrid>
+        </Flex>
     );
 };
 
-const RepoContent = ({ 
-    sortedRepos, 
-    headingRefs, 
-    controller 
-}: { 
-    sortedRepos: any[], 
+const RepoContent = ({
+    sortedRepos,
+    headingRefs,
+    controller
+}: {
+    sortedRepos: any[],
     headingRefs: React.MutableRefObject<{ [topic: string]: HTMLDivElement | null }>,
-    controller: BundleOverviewController 
+    controller: BundleOverviewController
 }) => (
     <>
         {sortedRepos.map((sortedRepo: { topic: string, repos: any[] }) => (
-            <RepoSection 
+            <RepoSection
                 key={sortedRepo.topic}
-                sortedRepo={sortedRepo} 
-                headingRefs={headingRefs} 
-                controller={controller} 
+                sortedRepo={sortedRepo}
+                headingRefs={headingRefs}
+                controller={controller}
             />
         ))}
     </>
@@ -205,25 +202,21 @@ export const BundleOverview = () => {
 
     return (
         <>
-            <div className="page-content__container repo-overview__container" style={{ position: 'relative' }}>
+            <Box mt={6} pl={10} py={10}>
                 <Flex direction={{ base: "column", lg: "row" }} align="flex-start" width="100%">
                     {/* Sidebar - appears first on mobile, second on desktop */}
                     <Box
                         minW={{ base: "100%", lg: "320px" }}
                         maxW={{ base: "100%", lg: "400px" }}
                         width={{ base: "100%", lg: "28%" }}
-                        className="repo-overview__sidebar"
                         order={{ base: 1, lg: 2 }}
-                        mb={{ base: 0, lg: 0 }}
-                        pl={{ base: 0, lg: 8 }}
-                        pr={{ base: 6, lg: 0 }}
                         position={{ base: "relative", lg: "sticky" }}
                         top={{ base: "10px", lg: "80px" }}
                         alignSelf="flex-start"
                         height={{ base: "auto", lg: "fit-content" }}
                     >
                         <SearchBar searchItem={searchItem} handleInputChange={handleInputChange} />
-                        
+
                         {/* Mobile Collapsible Minimap */}
                         <Box display={{ base: 'block', lg: 'none' }}>
                             <Button
@@ -241,7 +234,7 @@ export const BundleOverview = () => {
                                 <Minimap sortedRepos={sortedRepos || []} scrollToHeading={scrollToHeading} activeTopic={activeTopic || undefined} />
                             </Collapse>
                         </Box>
-                        
+
                         {/* Desktop Always Visible Minimap */}
                         <Box display={{ base: 'none', lg: 'block' }}>
                             <Minimap sortedRepos={sortedRepos || []} scrollToHeading={scrollToHeading} activeTopic={activeTopic || undefined} />
@@ -255,7 +248,7 @@ export const BundleOverview = () => {
                         </Box>
                     </Box>
                 </Flex>
-                
+
                 {/* Floating Back to Top Button - Mobile Only */}
                 {showBackToTop && (
                     <IconButton
@@ -275,7 +268,7 @@ export const BundleOverview = () => {
                         transition="all 0.2s"
                     />
                 )}
-            </div>
+            </Box>
         </>
     );
 }

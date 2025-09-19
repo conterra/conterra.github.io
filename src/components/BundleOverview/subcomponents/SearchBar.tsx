@@ -1,4 +1,4 @@
-import { Flex, InputGroup, InputLeftElement, Input, InputRightElement, IconButton } from '@chakra-ui/react';
+import { Flex, InputGroup, InputLeftElement, Input, InputRightElement, IconButton, Box } from '@chakra-ui/react';
 import { MdSearch, MdClose } from 'react-icons/md';
 
 interface SearchBarProps {
@@ -7,9 +7,9 @@ interface SearchBarProps {
 }
 
 export const SearchBar = ({ searchItem, handleInputChange }: SearchBarProps) => (
-  <div className="repo-overview--search-bar-container">
-    <Flex className="repo-overview--search-bar-flex">
-      <InputGroup className="repo-overview--search-bar-input">
+  <Box>
+    <Flex pr={{ base: 0, lg: 0 }}>
+      <InputGroup width="100%">
         <InputLeftElement pointerEvents='none'>
           <MdSearch />
         </InputLeftElement>
@@ -19,6 +19,7 @@ export const SearchBar = ({ searchItem, handleInputChange }: SearchBarProps) => 
           value={searchItem}
           onChange={handleInputChange}
           placeholder="Developer Network Bundles durchsuchen"
+          mb={2.5}
         />
         {searchItem && (
           <InputRightElement>
@@ -34,5 +35,5 @@ export const SearchBar = ({ searchItem, handleInputChange }: SearchBarProps) => 
         )}
       </InputGroup>
     </Flex>
-  </div>
+  </Box>
 );
