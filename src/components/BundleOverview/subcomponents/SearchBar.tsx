@@ -9,7 +9,7 @@ interface SearchBarProps {
 export const SearchBar = ({ searchItem, handleInputChange }: SearchBarProps) => (
   <div className="repo-overview--search-bar-container">
     <Flex className="repo-overview--search-bar-flex">
-      <InputGroup className="repo-overview--search-bar-input" position={"fixed"} zIndex={1000}>
+      <InputGroup className="repo-overview--search-bar-input">
         <InputLeftElement pointerEvents='none'>
           <MdSearch />
         </InputLeftElement>
