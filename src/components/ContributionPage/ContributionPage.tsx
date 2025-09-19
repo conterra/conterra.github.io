@@ -79,84 +79,84 @@ export const ContributionPage = () => {
                                                 {issue.description}
                                             </Text>
                                         </Box>
-                                        
+
                                         <Box display="flex" flexDirection="column" gap={2}>
                                             <Box display="flex" flexDirection="row" gap={6}>
                                                 <Box>
-                                                    <Text 
-                                                        fontSize="sm" 
-                                                        fontWeight="semibold" 
+                                                    <Text
+                                                        fontSize="sm"
+                                                        fontWeight="semibold"
                                                         color="gray.700"
                                                     >
                                                         Schätzung: {issue.estimatedExpenses} PT
                                                     </Text>
                                                 </Box>
-                                                
+
                                                 <Box flex="1">
-                                                    <Text 
-                                                        fontSize="sm" 
-                                                        fontWeight="semibold" 
-                                                        color="gray.700" 
+                                                    <Text
+                                                        fontSize="sm"
+                                                        fontWeight="semibold"
+                                                        color="gray.700"
                                                     >
                                                         Supporters:
                                                     </Text>
                                                 </Box>
                                             </Box>
-                                            
+
                                             <Box display="flex" flexDirection="row" gap={6} alignItems="center">
-                                            <Box>
-                                                <PieChart
-                                                    data={issue.contributors.map((c: Contributor) => c.value)}
-                                                    colors={issue.contributors.map((c: Contributor) => c.color)}
-                                                    size={120}
-                                                />
-                                            </Box>
-                                            
-                                            <Box flex="1">
-                                                <Stack spacing={2}>
-                                                    {issue.contributors.map((contributor: Contributor, idx: number) => (
-                                                        <Box 
-                                                            key={contributor.id || idx}
-                                                            display="flex"
-                                                            alignItems="center"
-                                                            gap={3}
-                                                            fontSize="sm"
-                                                            p={3}
-                                                            bg="gray.50"
-                                                            borderRadius="md"
-                                                            border="1px solid"
-                                                            borderColor="gray.200"
-                                                        >
+                                                <Box>
+                                                    <PieChart
+                                                        data={issue.contributors.map((c: Contributor) => c.value)}
+                                                        colors={issue.contributors.map((c: Contributor) => c.color)}
+                                                        size={120}
+                                                    />
+                                                </Box>
+
+                                                <Box flex="1">
+                                                    <Stack spacing={2}>
+                                                        {issue.contributors.map((contributor: Contributor, idx: number) => (
                                                             <Box
-                                                                w={3}
-                                                                h={3}
-                                                                borderRadius="full"
-                                                                bg={contributor.color}
-                                                                flexShrink={0}
-                                                            />
-                                                            <Text color="gray.700" fontWeight="medium">
-                                                                {contributor.name}
-                                                            </Text>
-                                                            <Text 
-                                                                color="gray.500" 
-                                                                fontSize="xs"
-                                                                fontWeight="semibold"
-                                                                ml="auto"
+                                                                key={contributor.id || idx}
+                                                                display="flex"
+                                                                alignItems="center"
+                                                                gap={3}
+                                                                fontSize="sm"
+                                                                p={3}
+                                                                bg="gray.50"
+                                                                borderRadius="md"
+                                                                border="1px solid"
+                                                                borderColor="gray.200"
                                                             >
-                                                                {contributor.value} PT
-                                                            </Text>
-                                                        </Box>
-                                                    ))}
-                                                </Stack>
+                                                                <Box
+                                                                    w={3}
+                                                                    h={3}
+                                                                    borderRadius="full"
+                                                                    bg={contributor.color}
+                                                                    flexShrink={0}
+                                                                />
+                                                                <Text color="gray.700" fontWeight="medium">
+                                                                    {contributor.name}
+                                                                </Text>
+                                                                <Text
+                                                                    color="gray.500"
+                                                                    fontSize="xs"
+                                                                    fontWeight="semibold"
+                                                                    ml="auto"
+                                                                >
+                                                                    {contributor.value} PT
+                                                                </Text>
+                                                            </Box>
+                                                        ))}
+                                                    </Stack>
+                                                </Box>
                                             </Box>
                                         </Box>
                                     </Box>
-                                </Box>
                                 </CardBody>
                                 <CardFooter pt={0}>
-                                    <ButtonGroup 
-                                        spacing={3} 
-                                        flexWrap="wrap" 
+                                    <ButtonGroup
+                                        spacing={3}
+                                        flexWrap="wrap"
                                         gap={2}
                                         w="full"
                                         justifyContent={{ base: "stretch", sm: "flex-start" }}
@@ -164,7 +164,7 @@ export const ContributionPage = () => {
                                         <Button
                                             leftIcon={<MdOpenInNew />}
                                             variant="outline"
-                                            colorScheme="blue"
+                                            colorScheme="secondary"
                                             size="sm"
                                             onClick={() => window.open(`${issue.link}`, '_blank')}
                                             flex={{ base: "1", sm: "0" }}
@@ -175,7 +175,7 @@ export const ContributionPage = () => {
                                         <Button
                                             leftIcon={<MdMailOutline />}
                                             variant="solid"
-                                            colorScheme="blue"
+                                            colorScheme="primary"
                                             size="sm"
                                             onClick={() => window.location.href = `mailto:${issue.contact}?subject=#${encodeURIComponent(issue.id)} ${encodeURIComponent(issue.title)}`}
                                             flex={{ base: "1", sm: "0" }}

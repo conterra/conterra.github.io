@@ -1,6 +1,7 @@
 import './App.css';
 import { ChakraProvider } from '@chakra-ui/react'
 import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
+import theme from './theme';
 
 import { NavigationBar } from './components/NavigationBar/NavigationBar'
 import { PageNotFound } from './components/PageNotFound'
@@ -11,7 +12,7 @@ import { ContributionPage } from './components/ContributionPage/ContributionPage
 
 function App() {
     return (
-        <ChakraProvider>
+        <ChakraProvider theme={theme}>
             <HashRouter>
                 <NavigationBar />
                 <Routes>
