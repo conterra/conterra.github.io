@@ -1,0 +1,56 @@
+[
+    {
+        "id": 1,
+        "title": "Attribute Slider: Multiple Sliders in one App",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, urna eu tincidunt consectetur, nisi nisl aliquam enim, eget facilisis sapien sem at erat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
+        "creationDate": "2023-01-01",
+        "estimatedExpenses": 3,
+        "contact": "s.holtkamp@conterra.de",
+        "state": "open",
+        "link": "https://github.com/conterra/attribute-slider/issues/1",
+        "contributors": [
+            {
+                "name": "Anonym",
+                "value": 1,
+                "color": "grey"
+            },
+            {
+                "name": "Max Mustermann",
+                "value": 1,
+                "color": "blue"
+            },
+            {
+                "name": "Erika Mustermann",
+                "value": 1,
+                "color": "orange"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "title": "Attribute Slider: Multiple Sliders in one App",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, urna eu tincidunt consectetur, nisi nisl aliquam enim, eget facilisis sapien sem at erat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
+        "creationDate": "2023-01-01",
+        "estimatedExpenses": 3,
+        "contact": "s.holtkamp@conterra.de",
+        "state": "open",
+        "link": "https://github.com/conterra/attribute-slider/issues/1",
+        "contributors": [
+            {
+                "name": "",
+                "value": 1,
+                "color": "grey"
+            },
+            {
+                "name": "Max Mustermann",
+                "value": 1,
+                "color": "blue"
+            },
+            {
+                "name": "Erika Mustermann",
+                "value": 1,
+                "color": "orange"
+            }
+        ]
+    }
+]
