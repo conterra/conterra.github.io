@@ -1,12 +1,12 @@
 import config from '../../config.json';
-import { Box, Flex, HStack, Icon, Image, LinkBox, LinkOverlay, useColorModeValue, IconButton, Popover, PopoverTrigger, PopoverContent, PopoverBody, VStack } from '@chakra-ui/react'
+import { Box, Flex, HStack, Icon, Image, LinkBox, LinkOverlay, useColorModeValue, IconButton, Popover, PopoverTrigger, PopoverContent, PopoverBody, VStack, useDisclosure } from '@chakra-ui/react'
 import { MdOpenInNew, MdMailOutline, MdMenu } from "react-icons/md";
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 
 import type { LinkProps } from '../../api';
 
-const NavLink = (props: LinkProps & { isActive?: boolean }) => {
-    const { children, href, target, isActive } = props;
+const NavLink = (props: LinkProps & { isActive?: boolean; onClose?: () => void }) => {
+    const { children, href, target, isActive, onClose } = props;
     const hoverBg = useColorModeValue('gray.200', 'gray.700');
     const isExternal = href?.startsWith('http') || href?.startsWith('mailto:');
     
@@ -41,6 +41,7 @@ const NavLink = (props: LinkProps & { isActive?: boolean }) => {
                 target={target}
                 className="navigation-bar--nav-link"
                 sx={activeStyles}
+                onClick={onClose}
             >
                 {children}
             </Box>
@@ -56,6 +57,7 @@ const NavLink = (props: LinkProps & { isActive?: boolean }) => {
             _hover={hoverStyles}
             className="navigation-bar--nav-link"
             sx={activeStyles}
+            onClick={onClose}
         >
             {children}
         </Box>
@@ -64,6 +66,7 @@ const NavLink = (props: LinkProps & { isActive?: boolean }) => {
 
 export const NavigationBar = () => {
     const location = useLocation();
+    const { isOpen, onOpen, onClose } = useDisclosure();
     return (
         <>
             <Flex>
@@ -79,7 +82,7 @@ export const NavigationBar = () => {
                         <p style={{ fontWeight: 500, fontSize: "x-large", textAlign: "center" }}>Community</p>
                         <Box position="absolute" right={0} top={0} bottom={0} display="flex" alignItems="center">                            
                             <Box display="block">
-                                <Popover placement="bottom-end">
+                                <Popover placement="bottom-end" isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
                                     <PopoverTrigger>
                                         <IconButton
                                             aria-label="Open menu"
@@ -100,18 +103,18 @@ export const NavigationBar = () => {
                                                     return (
                                                         <Box key={link.text} borderBottom="1px" borderColor="gray.100" _last={{ borderBottom: 'none' }}>
                                                             {link.isExternal ? (
-                                                                <NavLink href={link.link} target="_blank" isActive={isActive}>
+                                                                <NavLink href={link.link} target="_blank" isActive={isActive} onClose={onClose}>
                                                                     <Icon className="navigation-bar--external-link-icon"  mr={2} as={MdOpenInNew} />
                                                                     {link.text}
                                                                 </NavLink>
                                                             ) :
                                                                 link.isMailto ? (
-                                                                    <NavLink href={link.link} isActive={isActive}>
+                                                                    <NavLink href={link.link} isActive={isActive} onClose={onClose}>
                                                                         <Icon className="navigation-bar--external-link-icon" mr={2} as={MdMailOutline} />
                                                                         {link.text}
                                                                     </NavLink>
                                                                 ) : (
-                                                                    <NavLink href={link.link} isActive={isActive}>
+                                                                    <NavLink href={link.link} isActive={isActive} onClose={onClose}>
                                                                         {link.text}
                                                                     </NavLink>
                                                                 )
