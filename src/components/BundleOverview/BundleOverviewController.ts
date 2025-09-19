@@ -44,5 +44,44 @@ export class BundleOverviewController {
         });
 
         return sortedRepos;
-    };
+    }
+
+    public handleInputChange(
+        searchTerm: string,
+        gitHubRepoData: any[],
+        setSearchItem: (value: string) => void,
+        setFilteredRepos: (repos: any[]) => void,
+        setSortedRepos: (repos: any[]) => void
+    ): void {
+        setSearchItem(searchTerm);
+
+        if (!searchTerm) {
+            setFilteredRepos(gitHubRepoData);
+            setSortedRepos(this.sortRepositoriesByTopics(gitHubRepoData));
+            return;
+        }
+
+        const filteredItems = gitHubRepoData.filter((repo: any) =>
+            repo?.name?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
+            repo?.description?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
+            repo?.topics?.some((topic: string) => topic.toLowerCase().includes(searchTerm?.toLowerCase()))
+        );
+
+        setFilteredRepos(filteredItems);
+        setSortedRepos(this.sortRepositoriesByTopics(filteredItems));
+    }
+
+    public scrollToHeading(
+        topic: string,
+        headingRefs: React.MutableRefObject<{ [topic: string]: HTMLDivElement | null }>
+    ): void {
+        const ref = headingRefs.current[topic];
+        if (ref) {
+            ref.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    public scrollToTop(): void {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 }

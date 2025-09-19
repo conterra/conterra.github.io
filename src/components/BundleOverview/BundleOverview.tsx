@@ -27,6 +27,84 @@ import { OverviewCard } from './subcomponents/OverviewCard';
 import { SearchBar } from './subcomponents/SearchBar';
 import { Minimap } from './subcomponents/Minimap';
 
+const LoadingSpinner = () => (
+    <Center h="50vh" width="100vw" position="fixed" left={0} top={0} zIndex={2000} bg="rgba(255,255,255,0.7)">
+        <Spinner
+            thickness='4px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='#005587'
+            size='xl'
+        />
+    </Center>
+);
+
+const ErrorDisplay = ({ error }: { error: string }) => (
+    <Center h="40vh">
+        <Card bg="red.50" borderColor="red.300" borderWidth={1} p={6} minW="350px" boxShadow="sm">
+            <CardBody>
+                <Heading size="md" color="red.600" mb={2}>Fehler</Heading>
+                <Text color="red.700">{error}</Text>
+            </CardBody>
+        </Card>
+    </Center>
+);
+
+const RepoSection = ({ 
+    sortedRepo, 
+    headingRefs, 
+    controller 
+}: { 
+    sortedRepo: { topic: string, repos: any[] }, 
+    headingRefs: React.MutableRefObject<{ [topic: string]: HTMLDivElement | null }>,
+    controller: BundleOverviewController 
+}) => {
+    if (sortedRepo.repos.length < 1) return null;
+    
+    return (
+        <div key={sortedRepo.topic} className='repo-overview__topic-section'>
+            <Flex direction={'column'}>
+                <Heading
+                    size='lg' mb={6} mt={6}
+                    ref={el => { headingRefs.current[sortedRepo.topic] = el; }}
+                    data-topic={sortedRepo.topic}
+                    style={{ scrollMarginTop: 100 }}
+                >
+                    {sortedRepo.topic}
+                </Heading>
+                <SimpleGrid spacing={7} templateColumns='repeat(auto-fill, minmax(300px, 1fr))'>
+                    {sortedRepo.repos.map((repository: any, i: any) => (
+                        <div key={`${repository.name}-${i}`} >
+                            <OverviewCard repository={repository} controller={controller} />
+                        </div>
+                    ))}
+                </SimpleGrid>
+            </Flex>
+        </div>
+    );
+};
+
+const RepoContent = ({ 
+    sortedRepos, 
+    headingRefs, 
+    controller 
+}: { 
+    sortedRepos: any[], 
+    headingRefs: React.MutableRefObject<{ [topic: string]: HTMLDivElement | null }>,
+    controller: BundleOverviewController 
+}) => (
+    <>
+        {sortedRepos.map((sortedRepo: { topic: string, repos: any[] }) => (
+            <RepoSection 
+                key={sortedRepo.topic}
+                sortedRepo={sortedRepo} 
+                headingRefs={headingRefs} 
+                controller={controller} 
+            />
+        ))}
+    </>
+);
+
 export const BundleOverview = () => {
     const headingRefs = useRef<{ [topic: string]: HTMLDivElement | null }>({});
     const { isOpen, onToggle } = useDisclosure();
@@ -78,38 +156,23 @@ export const BundleOverview = () => {
     }, [controller]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const searchTerm = e.target.value;
-        setSearchItem(searchTerm);
-
-        if (!searchTerm) {
-            setFilteredRepos(gitHubRepoData);
-            setSortedRepos(controller.sortRepositoriesByTopics(gitHubRepoData));
-
-            return;
-        } else {
-            const filteredItems = gitHubRepoData.filter((repo: any) =>
-                repo?.name?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
-                repo?.description?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
-                repo?.topics?.some((topic: string) => topic.toLowerCase().includes(searchTerm?.toLowerCase()))
-            );
-
-            setFilteredRepos(filteredItems);
-            setSortedRepos(controller.sortRepositoriesByTopics(filteredRepos));
-        }
+        controller.handleInputChange(
+            e.target.value,
+            gitHubRepoData,
+            setSearchItem,
+            setFilteredRepos,
+            setSortedRepos
+        );
     };
 
     const scrollToHeading = (topic: string) => {
-        const ref = headingRefs.current[topic];
-        if (ref) {
-            ref.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        controller.scrollToHeading(topic, headingRefs);
     };
 
     const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        controller.scrollToTop();
     };
 
-    // Handle scroll to show/hide back to top button
     useEffect(() => {
         const handleScroll = () => {
             setShowBackToTop(window.scrollY > 400);
@@ -149,6 +212,12 @@ export const BundleOverview = () => {
             });
         };
     }, [sortedRepos]);
+
+    const renderMainContent = () => {
+        if (loading) return <LoadingSpinner />;
+        if (error) return <ErrorDisplay error={error} />;
+        return <RepoContent sortedRepos={sortedRepos} headingRefs={headingRefs} controller={controller} />;
+    };
 
     return (
         <>
@@ -198,52 +267,7 @@ export const BundleOverview = () => {
                     {/* Main content - appears second on mobile, first on desktop */}
                     <Box flex="1" pr={{ base: 0, lg: 8 }} order={{ base: 2, lg: 1 }}>
                         <Box width="100%">
-                            {loading ?
-                                <div>
-                                    <Center h="50vh" width="100vw" position="fixed" left={0} top={0} zIndex={2000} bg="rgba(255,255,255,0.7)">
-                                        <Spinner
-                                            thickness='4px'
-                                            speed='0.65s'
-                                            emptyColor='gray.200'
-                                            color='#005587'
-                                            size='xl'
-                                        />
-                                    </Center>
-                                </div>
-                                : error ?
-                                    <Center h="40vh">
-                                        <Card bg="red.50" borderColor="red.300" borderWidth={1} p={6} minW="350px" boxShadow="sm">
-                                            <CardBody>
-                                                <Heading size="md" color="red.600" mb={2}>Fehler</Heading>
-                                                <Text color="red.700">{error}</Text>
-                                            </CardBody>
-                                        </Card>
-                                    </Center>
-                                    : sortedRepos.map(
-                                        (sortedRepo: { topic: string, repos: any[] }) => (
-                                            sortedRepo.repos.length >= 1 && (
-                                                <div key={sortedRepo.topic} className='repo-overview__topic-section'>
-                                                    <Flex direction={'column'}>
-                                                        <Heading
-                                                            size='lg' mb={6} mt={6}
-                                                            ref={el => { headingRefs.current[sortedRepo.topic] = el; }}
-                                                            data-topic={sortedRepo.topic}
-                                                            style={{ scrollMarginTop: 100 }}
-                                                        >
-                                                            {sortedRepo.topic}
-                                                        </Heading>
-                                                        <SimpleGrid spacing={7} templateColumns='repeat(auto-fill, minmax(300px, 1fr))'>
-                                                            {sortedRepo.repos.map((repository: any, i: any) => (
-                                                                <div key={`${repository.name}-${i}`} >
-                                                                    <OverviewCard repository={repository} controller={controller} />
-                                                                </div>
-                                                            ))}
-                                                        </SimpleGrid>
-                                                    </Flex>
-                                                </div>
-                                            )
-                                        ))
-                            }
+                            {renderMainContent()}
                         </Box>
                     </Box>
                 </Flex>
