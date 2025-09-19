@@ -1,7 +1,7 @@
 export const PageNotFound = (props: any) => {
     return (
       <>
-        <div className="page-content__container">
+        <div style={{paddingTop: "80px", marginLeft: "15px"}}>
           404 - Not Found
         </div>
       </>
