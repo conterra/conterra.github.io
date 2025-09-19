@@ -22,7 +22,7 @@ const NavLink = (props: LinkProps & { isActive?: boolean }) => {
     const hoverStyles = isActive ? {
         textDecoration: 'none',
         bg: '#005587',
-        color: '#1A202C'
+        color: '#fff'
     } : {
         textDecoration: 'none',
         bg: hoverBg
@@ -84,13 +84,14 @@ export const NavigationBar = () => {
                                         <IconButton
                                             aria-label="Open menu"
                                             icon={<MdMenu />}
-                                            variant="ghost"
+                                            variant="solid"
+                                            colorScheme='primary'
                                             size="md"
                                         />
                                     </PopoverTrigger>
-                                    <PopoverContent w="200px">
-                                        <PopoverBody p={0}>
-                                            <VStack spacing={0} align="stretch">
+                                    <PopoverContent w="300px">
+                                        <PopoverBody p={2}>
+                                            <VStack spacing={4} align="stretch">
                                                 {config.NavigationBar.links.map((link: any) => {
                                                     let isActive = false;
                                                     if (!link.isExternal && !link.isMailto && link.link) {
