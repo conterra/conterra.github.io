@@ -19,7 +19,7 @@ export const NewsCard = ({ release, controller }: NewsCardProps) => {
             overflow='hidden'
             variant='outline'
             borderColor={isMajorRelease ? theme.colors.highlight : undefined}
-            borderWidth={isMajorRelease ? '4px' : undefined}
+            borderWidth={isMajorRelease ? '2px' : undefined}
             boxShadow={isMajorRelease ? 'lg' : undefined}
             display='flex'
             height='100%'
@@ -33,9 +33,10 @@ export const NewsCard = ({ release, controller }: NewsCardProps) => {
         />
         <Stack flex='1' justify='space-between'>
             <CardBody flex='1'>
-                <Heading textTransform='capitalize' size="md" pb={3}>
+                <Heading textTransform='capitalize' size="md">
                     {controller.formatRepositoryName(release.repoTitle)}: {release.name} ({controller.getDate(release.published_at)})
                 </Heading>
+                <hr style={{ border: 0, borderTop: `1px solid ${theme.colors.gray[200]}`, margin: '5px' }} />
                 <ReactMarkdown 
                     remarkPlugins={[remarkBreaks, remarkGfm]}
                     components={{
@@ -46,8 +47,8 @@ export const NewsCard = ({ release, controller }: NewsCardProps) => {
                         ul: ({ children }) => <Text as="ul" pl={4} mb={2}>{children}</Text>,
                         ol: ({ children }) => <Text as="ol" pl={4} mb={2}>{children}</Text>,
                         li: ({ children }) => <Text as="li" mb={1}>{children}</Text>,
-                        code: ({ children }) => <Text as="code" bg="gray.100" px={1} borderRadius="sm" fontFamily="mono">{children}</Text>,
-                        pre: ({ children }) => <Text as="pre" bg="gray.100" p={3} borderRadius="md" overflow="auto" fontFamily="mono" mb={2}>{children}</Text>,
+                        code: ({ children }) => <Text as="code" px={1} borderRadius="sm" fontFamily="mono">{children}</Text>,
+                        pre: ({ children }) => <Text as="pre" p={3} borderRadius="md" overflow="auto" fontFamily="mono" mb={2}>{children}</Text>,
                     }}
                 >
                     {release?.body || ''}
@@ -55,11 +56,11 @@ export const NewsCard = ({ release, controller }: NewsCardProps) => {
             </CardBody>
             <CardFooter mt='auto'>
                 <ButtonGroup>
-                    <Button leftIcon={<MdOpenInNew />} as="a" href={release.html_url} target="_blank" rel="noopener noreferrer">
+                    <Button leftIcon={<MdOpenInNew />} variant='solid' as="a" href={release.html_url} target="_blank" rel="noopener noreferrer">
                         Zur Detailseite
                     </Button>
                     {release.homepage && (
-                        <Button leftIcon={<MdOutlineExitToApp />} variant='solid' colorScheme='blue' onClick={() => window.open(`${release.homepage}`, '_blank')}>
+                        <Button leftIcon={<MdOutlineExitToApp />} variant='solid' colorScheme='primary' onClick={() => window.open(`${release.homepage}`, '_blank')}>
                             Zur Demo
                         </Button>
                     )}

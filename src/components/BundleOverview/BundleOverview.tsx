@@ -197,7 +197,7 @@ export const BundleOverview = () => {
 
                     {/* Main content - appears second on mobile, first on desktop */}
                     <Box flex="1" pr={{ base: 0, lg: 8 }} order={{ base: 2, lg: 1 }}>
-                        <Box width="100%" mt={3}>
+                        <Box width="100%">
                             {loading ?
                                 <div>
                                     <Center h="50vh" width="100vw" position="fixed" left={0} top={0} zIndex={2000} bg="rgba(255,255,255,0.7)">
@@ -225,8 +225,7 @@ export const BundleOverview = () => {
                                                 <div key={sortedRepo.topic} className='repo-overview__topic-section'>
                                                     <Flex direction={'column'}>
                                                         <Heading
-                                                            size='lg'
-                                                            className='repo-overview__topic-section-header'
+                                                            size='lg' mb={6} mt={6}
                                                             ref={el => { headingRefs.current[sortedRepo.topic] = el; }}
                                                             data-topic={sortedRepo.topic}
                                                             style={{ scrollMarginTop: 100 }}
