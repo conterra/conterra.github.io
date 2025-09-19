@@ -39,17 +39,6 @@ const LoadingSpinner = () => (
     </Center>
 );
 
-const ErrorDisplay = ({ error }: { error: string }) => (
-    <Center h="40vh">
-        <Card bg="red.50" borderColor="red.300" borderWidth={1} p={6} minW="350px" boxShadow="sm">
-            <CardBody>
-                <Heading size="md" color="red.600" mb={2}>Fehler</Heading>
-                <Text color="red.700">{error}</Text>
-            </CardBody>
-        </Card>
-    </Center>
-);
-
 const RepoSection = ({ 
     sortedRepo, 
     headingRefs, 
@@ -110,7 +99,6 @@ export const BundleOverview = () => {
     const { isOpen, onToggle } = useDisclosure();
 
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
     const [gitHubRepoData, setGitHubRepoData] = useState<any>(null);
     const [searchItem, setSearchItem] = useState('');
     const [filteredRepos, setFilteredRepos] = useState(gitHubRepoData);
@@ -123,14 +111,12 @@ export const BundleOverview = () => {
     useEffect(() => {
         let isMounted = true;
         setLoading(true);
-        setError(null);
 
         fetch('/data/base_data.json')
             .then(res => res.json())
             .then((data) => {
                 if (isMounted) {
                     if (!data) {
-                        setError("Fehler beim Laden der Releases.");
                         setGitHubRepoData([]);
                         setFilteredRepos([]);
                         setSortedRepos([]);
@@ -144,7 +130,6 @@ export const BundleOverview = () => {
             })
             .catch(() => {
                 if (isMounted) {
-                    setError("Fehler beim Laden der Releases.");
                     setGitHubRepoData([]);
                     setFilteredRepos([]);
                     setSortedRepos([]);
@@ -215,7 +200,6 @@ export const BundleOverview = () => {
 
     const renderMainContent = () => {
         if (loading) return <LoadingSpinner />;
-        if (error) return <ErrorDisplay error={error} />;
         return <RepoContent sortedRepos={sortedRepos} headingRefs={headingRefs} controller={controller} />;
     };
 
