@@ -55,7 +55,7 @@ export const NewsCard = ({ release, controller }: NewsCardProps) => {
                 </ReactMarkdown>
             </CardBody>
             <CardFooter mt='auto'>
-                <ButtonGroup>
+                <ButtonGroup width="100%" justifyContent={'space-around'}>
                     <Button leftIcon={<MdOpenInNew />} variant='solid' as="a" href={release.html_url} target="_blank" rel="noopener noreferrer">
                         Zur Detailseite
                     </Button>
