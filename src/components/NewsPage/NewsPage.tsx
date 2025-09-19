@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Card, CardBody, Center, Heading, Spinner, Text, SimpleGrid, Box } from '@chakra-ui/react'
+import { Card, CardBody, Center, Heading, Spinner, Text, SimpleGrid, Box, useTheme } from '@chakra-ui/react'
 
-import "./NewsPage.css";
 import { NewsPageController } from './NewsPageController';
 import { NewsCard } from './subcomponents/NewsCard';
 
 export const NewsPage = () => {
+    const theme = useTheme();
     const [gitHubNewsData, setGitHubNewsData] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -36,8 +36,7 @@ export const NewsPage = () => {
 
     return (
         <>
-            <div className="page-content__container newspage__container">
-                <Box width="100%" mt={6}>
+                <Box width="100%" mt={6} p={10}>
                     {loading ?
                         <div>
                             <Center h="50vh" width="100vw" position="fixed" left={0} top={0} zIndex={2000} bg="rgba(255,255,255,0.7)">
@@ -45,7 +44,7 @@ export const NewsPage = () => {
                                     thickness='4px'
                                     speed='0.65s'
                                     emptyColor='gray.200'
-                                    color='#005587'
+                                    color={theme.colors.primaryBlue}
                                     size='xl'
                                 />
                             </Center>
@@ -72,7 +71,6 @@ export const NewsPage = () => {
                             </>
                     }
                 </Box>
-            </div>
         </>
     );
 }

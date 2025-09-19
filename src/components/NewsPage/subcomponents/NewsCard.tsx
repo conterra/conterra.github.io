@@ -1,4 +1,4 @@
-import { Card, CardBody, CardFooter, Image, Stack, Heading, Text, ButtonGroup, Button } from '@chakra-ui/react';
+import { Card, CardBody, CardFooter, Image, Stack, Heading, Text, ButtonGroup, Button, useTheme } from '@chakra-ui/react';
 import { MdOpenInNew, MdOutlineExitToApp } from "react-icons/md";
 import ReactMarkdown from 'react-markdown';
 import remarkBreaks from 'remark-breaks';
@@ -10,6 +10,7 @@ interface NewsCardProps {
 }
 
 export const NewsCard = ({ release, controller }: NewsCardProps) => {
+    const theme = useTheme();
     const isMajorRelease = /^v?\d+\.0\.0$/i.test(release.name);
     
     return (
@@ -17,11 +18,12 @@ export const NewsCard = ({ release, controller }: NewsCardProps) => {
             direction='column'
             overflow='hidden'
             variant='outline'
-            borderColor={isMajorRelease ? 'yellow.500' : undefined}
+            borderColor={isMajorRelease ? theme.colors.highlight : undefined}
             borderWidth={isMajorRelease ? '4px' : undefined}
             boxShadow={isMajorRelease ? 'lg' : undefined}
             display='flex'
             height='100%'
+            mb={15}
         >
         <Image
             objectFit='cover'
