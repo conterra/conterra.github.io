@@ -202,7 +202,7 @@ export const BundleOverview = () => {
 
     return (
         <>
-            <Box mt={6} pl={10} py={10}>
+            <Box width="100%" mt={6} p={5} py={10}>
                 <Flex direction={{ base: "column", lg: "row" }} align="flex-start" width="100%">
                     {/* Sidebar - appears first on mobile, second on desktop */}
                     <Box

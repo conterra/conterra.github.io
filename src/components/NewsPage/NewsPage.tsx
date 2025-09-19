@@ -70,7 +70,7 @@ export const NewsPage = () => {
     };
 
     return (
-        <Box width="100%" mt={6} p={10}>
+        <Box width="100%" mt={6} p={5} pt={10}>
             {renderContent()}
         </Box>
     );
