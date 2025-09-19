@@ -3,8 +3,8 @@ import {
     useState
 } from 'react';
 
-import { Card, CardBody, CardFooter, Stack, Heading, Text, ButtonGroup, Button, Box, CardHeader } from '@chakra-ui/react';
-import { MdOpenInNew, MdMailOutline } from "react-icons/md";
+import { Card, CardBody, CardFooter, Stack, Heading, Text, ButtonGroup, Button, Box, CardHeader, IconButton, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure } from '@chakra-ui/react';
+import { MdOpenInNew, MdMailOutline, MdHelpOutline } from "react-icons/md";
 import "./ContributionPage.css";
 import { Leaderboard } from "./subcomponents/Leaderboard";
 import { PieChart } from "./subcomponents/PieChart";
@@ -116,6 +116,7 @@ export const ContributionPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [issueData, setIssueData] = useState<Issue[]>([]);
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const leaderboardData = config.leaderboardData;
 
@@ -171,9 +172,46 @@ export const ContributionPage = () => {
 
     return (
         <Box width="100%" mt={6} p={5} pt={10}>
-            <Heading size='lg' mb={6} mt={6}>
-                Community Entwicklungen
-            </Heading>
+            <Box display="flex" alignItems="center" gap={3} mb={6} mt={6}>
+                <Heading size='lg'>
+                    Community Entwicklungen
+                </Heading>
+                <IconButton
+                    aria-label="Hilfe anzeigen"
+                    icon={<MdHelpOutline />}
+                    size="md"
+                    variant="solid"
+                    colorScheme="primary"
+                    onClick={onOpen}
+                />
+            </Box>
+            
+            <Modal isOpen={isOpen} onClose={onClose} size="lg">
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Community Entwicklungen - Hilfe</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody pb={6}>
+                        <Text mb={4}>
+                            Hier finden Sie eine Übersicht der aktuellen Community-Entwicklungen und Projekte, 
+                            an denen Sie sich beteiligen können.
+                        </Text>
+                        <Text mb={4}>
+                            <strong>Schätzung (PT):</strong> Die Punktzahl gibt den geschätzten Aufwand für die 
+                            Implementierung an. PT steht für "Personentage", eine Maßeinheit für den Arbeitsaufwand.
+                        </Text>
+                        <Text mb={4}>
+                            <strong>Supporters:</strong> Die Grafik zeigt die Verteilung der Unterstützer und 
+                            deren Beiträge zum jeweiligen Projekt.
+                        </Text>
+                        <Text>
+                            Nutzen Sie die Buttons "Zur Detailseite" für weitere Informationen oder 
+                            "E-Mail Kontakt" um direkt mit den Projektverantwortlichen in Kontakt zu treten.
+                        </Text>
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
+            
             <div className="issue-list">
                 {issueData.map((issue: Issue, index: number) => (
                     <Card key={issue.id || index}>
