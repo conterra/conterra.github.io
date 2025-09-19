@@ -101,13 +101,13 @@ export const NavigationBar = () => {
                                                         <Box key={link.text} borderBottom="1px" borderColor="gray.100" _last={{ borderBottom: 'none' }}>
                                                             {link.isExternal ? (
                                                                 <NavLink href={link.link} target="_blank" isActive={isActive}>
-                                                                    <Icon className="navigation-bar--external-link-icon" as={MdOpenInNew} />
+                                                                    <Icon className="navigation-bar--external-link-icon"  mr={2} as={MdOpenInNew} />
                                                                     {link.text}
                                                                 </NavLink>
                                                             ) :
                                                                 link.isMailto ? (
                                                                     <NavLink href={link.link} isActive={isActive}>
-                                                                        <Icon className="navigation-bar--external-link-icon" as={MdMailOutline} />
+                                                                        <Icon className="navigation-bar--external-link-icon" mr={2} as={MdMailOutline} />
                                                                         {link.text}
                                                                     </NavLink>
                                                                 ) : (
