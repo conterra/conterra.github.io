@@ -16,9 +16,10 @@ import {
     CardBody,
     Button,
     Collapse,
-    useDisclosure
+    useDisclosure,
+    IconButton
 } from '@chakra-ui/react'
-import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
+import { ChevronDownIcon, ChevronUpIcon, ChevronUpIcon as ArrowUpIcon } from '@chakra-ui/icons'
 
 import "./BundleOverview.css";
 import { BundleOverviewController } from './BundleOverviewController';
@@ -37,6 +38,7 @@ export const BundleOverview = () => {
     const [filteredRepos, setFilteredRepos] = useState(gitHubRepoData);
     const [sortedRepos, setSortedRepos] = useState<any>(null);
     const [activeTopic, setActiveTopic] = useState<string | null>(null);
+    const [showBackToTop, setShowBackToTop] = useState(false);
 
     const controller = useMemo(() => new BundleOverviewController(), []);
 
@@ -102,6 +104,20 @@ export const BundleOverview = () => {
             ref.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     };
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    // Handle scroll to show/hide back to top button
+    useEffect(() => {
+        const handleScroll = () => {
+            setShowBackToTop(window.scrollY > 400);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     useEffect(() => {
         if (!sortedRepos) return;
@@ -232,6 +248,26 @@ export const BundleOverview = () => {
                         </Box>
                     </Box>
                 </Flex>
+                
+                {/* Floating Back to Top Button - Mobile Only */}
+                {showBackToTop && (
+                    <IconButton
+                        aria-label="Back to top"
+                        icon={<ArrowUpIcon />}
+                        position="fixed"
+                        bottom="20px"
+                        right="20px"
+                        size="lg"
+                        colorScheme="blue"
+                        borderRadius="full"
+                        boxShadow="lg"
+                        zIndex={1000}
+                        display={{ base: 'flex', lg: 'none' }}
+                        onClick={scrollToTop}
+                        _hover={{ transform: 'scale(1.1)' }}
+                        transition="all 0.2s"
+                    />
+                )}
             </div>
         </>
     );
