@@ -1,55 +1,39 @@
 [
     {
         "id": 1,
-        "title": "Attribute Slider: Multiple Sliders in one App",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, urna eu tincidunt consectetur, nisi nisl aliquam enim, eget facilisis sapien sem at erat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-        "creationDate": "2023-01-01",
+        "title": "Attribute Slider: Mehrere Slider in einer App",
+        "description": "Mit dem AttributSlider kann man einen Layer nach einem Attribut filtern. In manchen Fällen ist es sinnvoll, mehrere Slider in einer App zu haben, z.B. wenn man verschiedene Attribute auf verschiedenen Layern filtern möchte. Im Rahmen dieser Entwicklung soll eine TocAction bereitgestellt werden, mit der für jeden Layer ein AttributeSlider geöffnet werden kann.",
+        "creationDate": "22.09.2025",
+        "author": "Hamburg Port Authority (HPA)",
+        "followers": "/",
         "estimatedExpenses": 3,
         "contact": "s.holtkamp@conterra.de",
         "state": "open",
         "link": "https://github.com/conterra/attribute-slider/issues/1",
         "contributors": [
             {
-                "name": "Anonym",
-                "value": 1,
+                "name": "Ausstehend",
+                "value": 3,
                 "color": "grey"
-            },
-            {
-                "name": "Max Mustermann",
-                "value": 1,
-                "color": "blue"
-            },
-            {
-                "name": "Erika Mustermann",
-                "value": 1,
-                "color": "orange"
             }
         ]
     },
     {
         "id": 2,
-        "title": "Attribute Slider: Multiple Sliders in one App",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, urna eu tincidunt consectetur, nisi nisl aliquam enim, eget facilisis sapien sem at erat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-        "creationDate": "2023-01-01",
-        "estimatedExpenses": 3,
+        "title": "Neues Bundle für Serien Druck",
+        "description": "Es soll ein neues Bundle entwickelt werden, mit dem es möglich ist, Serien Drucke zu erstellen. Dabei soll entlang einer Geometrie, z.B. einer Polylinie, gedruckt werden. Zunächst sollen hierbei mehrere Drucke in einzelnen Dateien erstellt werden. In einem späteren Schritt soll es dann möglich sein, die Drucke in einer Datei zusammenzufassen.",
+        "creationDate": "18.09.2025",
+        "author": "Hamburg Port Authority (HPA)",
+        "followers": "/",
+        "estimatedExpenses": 10,
         "contact": "s.holtkamp@conterra.de",
         "state": "open",
         "link": "https://github.com/conterra/attribute-slider/issues/1",
         "contributors": [
             {
-                "name": "",
-                "value": 1,
+                "name": "Ausstehend",
+                "value": 10,
                 "color": "grey"
-            },
-            {
-                "name": "Max Mustermann",
-                "value": 1,
-                "color": "blue"
-            },
-            {
-                "name": "Erika Mustermann",
-                "value": 1,
-                "color": "orange"
             }
         ]
     }
