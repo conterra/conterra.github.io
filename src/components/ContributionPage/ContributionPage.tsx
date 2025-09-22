@@ -54,8 +54,12 @@ const IssueCardContent = ({ issue }: { issue: Issue }) => (
             {issue.description}
         </Text>
 
+        <Text fontSize="sm" fontWeight="semibold" color="gray.700" mb={4}>
+            Idee: {issue.author}<br/>
+            Follower: {issue.followers}
+        </Text>
         <Box display="flex" flexDirection="row" gap={6} mb={2}>
-            <Text fontSize="sm" fontWeight="semibold" color="gray.700">
+            <Text fontSize="sm" fontWeight="semibold" color="gray.700" whiteSpace="pre-line">
                 Schätzung: {issue.estimatedExpenses} PT
             </Text>
             <Text fontSize="sm" fontWeight="semibold" color="gray.700" flex="1">
@@ -185,7 +189,7 @@ export const ContributionPage = () => {
                     onClick={onOpen}
                 />
             </Box>
-            
+
             <Modal isOpen={isOpen} onClose={onClose} size="lg">
                 <ModalOverlay />
                 <ModalContent>
@@ -193,30 +197,30 @@ export const ContributionPage = () => {
                     <ModalCloseButton />
                     <ModalBody pb={6}>
                         <Text mb={4}>
-                            Hier finden Sie eine Übersicht der aktuellen Community-Entwicklungen und Projekte, 
+                            Hier finden Sie eine Übersicht der aktuellen Community-Entwicklungen und Projekte,
                             an denen Sie sich beteiligen können.
                         </Text>
                         <Text mb={4}>
-                            <strong>Schätzung (PT):</strong> Die Punktzahl gibt den geschätzten Aufwand für die 
+                            <strong>Schätzung (PT):</strong> Die Punktzahl gibt den geschätzten Aufwand für die
                             Implementierung an. PT steht für "Personentage", eine Maßeinheit für den Arbeitsaufwand.
                         </Text>
                         <Text mb={4}>
-                            <strong>Supporters:</strong> Die Grafik zeigt die Verteilung der Unterstützer und 
+                            <strong>Supporters:</strong> Die Grafik zeigt die Verteilung der Unterstützer und
                             deren Beiträge zum jeweiligen Projekt.
                         </Text>
                         <Text>
-                            Nutzen Sie die Buttons "Zur Detailseite" für weitere Informationen oder 
+                            Nutzen Sie die Buttons "Zur Detailseite" für weitere Informationen oder
                             "E-Mail Kontakt" um direkt mit den Projektverantwortlichen in Kontakt zu treten.
                         </Text>
                     </ModalBody>
                 </ModalContent>
             </Modal>
-            
+
             <div className="issue-list">
                 {issueData.map((issue: Issue, index: number) => (
                     <Card key={issue.id || index}>
                         <CardHeader>
-                            <Heading size="md">{issue.title}</Heading>
+                            <Heading size="md">{issue.title} (Erstellt: {issue.creationDate})</Heading>
                         </CardHeader>
                         <CardBody py={6}>
                             <IssueCardContent issue={issue} />
