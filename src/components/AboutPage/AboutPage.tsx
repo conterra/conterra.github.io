@@ -40,7 +40,7 @@ export const AboutPage = () => {
                 <Text>
                     Für Entwickler:innen bietet das Projekt <Link href="https://github.com/conterra/mapapps-4-developers" color="#005587" isExternal ml={1} textDecoration="underline">mapapps-4-developers</Link> einen Einstiegspunkt zum Erstellen eigener Bundles und Themes.
                     Dort finden Sie einige Beispiele für gängige Aufgaben.<br />
-                    Gerne können Sie sich auch über Issues und mit Ideen beteiligen. Nutzen Sie dazu das GitHub Issue Feature oder treten Sie per<Link href="mailto:s.holtkamp@conterra.de" color="#005587" isExternal ml={1} textDecoration="underline">Mail</Link> mit uns in Kontakt.
+                    Gerne können Sie sich auch über Issues und mit Ideen beteiligen. Nutzen Sie dazu das GitHub Issue Feature oder treten Sie per<Link href="mailto:developernetwork@conterra.de" color="#005587" isExternal ml={1} textDecoration="underline">Mail</Link> mit uns in Kontakt.
                 </Text>
                 <Box bg="gray.50" borderRadius="md" p={4} w="100%">
                     <InfoIcon color="#005587" mr={2} />
